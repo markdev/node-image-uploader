@@ -1,0 +1,92 @@
+extends ./createLayout.jade
+
+block title
+	title My Contests
+
+block content
+	div.mainBody
+		a.backLink(href="/create") <- Back To My Contests
+		hr
+		h1 Create A New Contest
+		form(action="/create/new", method="post")
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Title:
+				div.formInput
+					input(type="text" name="title")
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Tags:
+				div.formInput
+					input(type="text" name="tags")
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Banner:
+				div.formInput
+					input(type="button" name="chooseFile" value="Choose An Image")
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Rules:
+				div.formInput
+					input(type="textarea" name="rules")
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Deadline:
+				div.formInput
+					label Month
+					select
+					label Day
+					select
+					label Time
+					select
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Judging:
+				div.formInput
+					input(type="radio" name="judging" value="public" checked="true")
+					label Public
+					br
+					input(type="radio" name="judging" value="invite")
+					label Invite-Only
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Competition:
+				div.formInput
+					input(type="radio" name="competition" value="public" checked="true")
+					label Public
+					br
+					input(type="radio" name="competition" value="invite")
+					label Invite-Only
+				div.clear
+			
+			div.clear
+
+			div.formRow
+				div.submitBlock
+					input(type="submit" value="Create New Contest")
+	
