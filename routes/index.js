@@ -1,18 +1,11 @@
 var express = require('express');
+var util = require('util');
 var router = express.Router();
 var basicAuth = require('basic-auth');
+var auth = require('../my_modules/auth');
 
-// raw http auth for dev
-router.use(function (req, res, next) {
-    var unauthorized = function (res) {
-        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-        return res.send(401);
-    };
-    var user = basicAuth(req);
-    return unauthorized(res);
-    //if (!user || !user.name || !user.pass) return unauthorized(res);
-    //return (user.name === 'foo' && user.pass === 'bar')? next() : unauthorized(res);
-});
+
+router.use(auth.authorize);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
