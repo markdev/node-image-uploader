@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var basicAuth = require('basic-auth');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -24,6 +25,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+
+// raw http auth for dev
+app.use(function (req, res, next) {
+    var unauthorized = function (res) {
+        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+        return res.send(401);
+    };
+    var user = basicAuth(req);
+    if (!user || !user.name || !user.pass) return unauthorized(res);
+    return (user.name === 'foo' && user.pass === 'bar')? next() : unauthorized(res);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
