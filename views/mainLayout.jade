@@ -1,0 +1,31 @@
+doctype html
+html
+	head
+		link(rel='stylesheet', href='/css/main.css', type='text/css')
+		block title
+			title Default title
+	body#main
+		div#top
+			a(href="/")
+				div#titleBox
+			a(href="/search")
+				div#searchBox
+			div#userName
+				p Hello, #{user.name}!
+				a(href="/logout") Log out here
+		div#body
+			block content
+		div#bottom
+			block bottomBar
+
+	block bottomBar
+		a(href="/create")
+			div.bottomButton#create
+		a(href="/messages")
+			div.bottomButton#messages
+		a(href="/judge")
+			div.bottomButton#judge
+		a(href="/compete")
+			div.bottomButton#compete
+		a(href="/settings")
+			div.bottomButton#settingsActive

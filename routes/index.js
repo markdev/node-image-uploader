@@ -9,7 +9,7 @@ router.use(auth.authorize);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Express' });
+	res.render('home/index', { title: 'Express', user: {name: 'Mark'} });
 });
 
 router.get('/login', function(req, res, next) {

@@ -1,0 +1,166 @@
+html, body, ul, ol {
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: "Comic Sans MS", Arial; }
+
+h1, h2 {
+  margin: 0; }
+
+body#signUp {
+  font-family: "Comic Sans MS", Arial; }
+  body#signUp div#top {
+    width: 100%;
+    height: 200px;
+    background-color: #FFA834;
+    color: #FFF;
+    padding-top: 25px; }
+    body#signUp div#top h1, body#signUp div#top h2 {
+      text-align: center;
+      padding: 10px; }
+    body#signUp div#top h2 {
+      font-size: 40px; }
+    body#signUp div#top h1 {
+      font-size: 65px; }
+    body#signUp div#top div#titleBox {
+      width: 350px;
+      height: 80px;
+      background-size: 100% 100%;
+      background-image: url("/assets/sunzorawhite.png");
+      margin: 0 auto; }
+  body#signUp div#bottom {
+    padding-top: 60px;
+    test-align: center; }
+    body#signUp div#bottom div.dataField {
+      text-align: center;
+      font-size: 30px;
+      padding: 20px 0px; }
+      body#signUp div#bottom div.dataField input {
+        width: 200px;
+        height: 30px;
+        font-size: 20px; }
+    body#signUp div#bottom ul#errorList {
+      text-align: center;
+      list-style-type: none; }
+      body#signUp div#bottom ul#errorList li.error {
+        color: #F00; }
+    body#signUp div#bottom a {
+      margin: auto; }
+
+body#main div.bottomButton {
+  width: 14%;
+  height: 80%;
+  float: left;
+  margin: 0% 3%;
+  background-size: 100% 100%; }
+  body#main div.bottomButton#create {
+    background-image: url("/assets/createwhite.png"); }
+    body#main div.bottomButton#create:hover {
+      background-image: url("/assets/creategray.png"); }
+  body#main div.bottomButton#messages {
+    background-image: url("/assets/messagewhite.png"); }
+    body#main div.bottomButton#messages:hover {
+      background-image: url("/assets/messagegray.png"); }
+  body#main div.bottomButton#judge {
+    background-image: url("/assets/judgewhite.png"); }
+    body#main div.bottomButton#judge:hover {
+      background-image: url("/assets/judgegray.png"); }
+  body#main div.bottomButton#compete {
+    background-image: url("/assets/competewhite.png"); }
+    body#main div.bottomButton#compete:hover {
+      background-image: url("/assets/competegray.png"); }
+  body#main div.bottomButton#settings {
+    background-image: url("/assets/settingswhite.png"); }
+    body#main div.bottomButton#settings:hover {
+      background-image: url("/assets/settingsgray.png"); }
+  body#main div.bottomButton#createActive {
+    background-image: url("/assets/creategray.png"); }
+  body#main div.bottomButton#messagesActive {
+    background-image: url("/assets/messagegray.png"); }
+  body#main div.bottomButton#judgeActive {
+    background-image: url("/assets/judgegray.png"); }
+  body#main div.bottomButton#competeActive {
+    background-image: url("/assets/competegray.png"); }
+  body#main div.bottomButton#settingsActive {
+    background-image: url("/assets/settingsgray.png"); }
+body#main div#top {
+  width: 100%;
+  height: 100px;
+  background-color: #FFA834;
+  color: #FFF;
+  padding: 3% 0%; }
+  body#main div#top div#titleBox {
+    vertical-align: middle;
+    width: 30%;
+    height: 60%;
+    font-size: 50px;
+    margin: 2% 0% 0% 5%;
+    float: left;
+    background-size: 100% 100%;
+    background-image: url("/assets/sunzorawhite.png"); }
+  body#main div#top div#userName {
+    float: right;
+    margin: 2% 0% 0% 0%;
+    margin-right: 5%;
+    text-align: center;
+    font-size: 1em; }
+  body#main div#top div#searchBox {
+    float: right;
+    width: 10%;
+    height: 100px;
+    background-size: 100% 100%;
+    background-image: url("/assets/searchwhite.png"); }
+body#main div#body div.mainBody {
+  width: 100%;
+  height: 100%; }
+  body#main div#body div.mainBody h1 {
+    text-align: center;
+    margin-bottom: 20px; }
+  body#main div#body div.mainBody div.errors {
+    text-align: center;
+    margin: 0 auto; }
+    body#main div#body div.mainBody div.errors ul {
+      color: #f00; }
+  body#main div#body div.mainBody div.formRow {
+    width: 100%;
+    margin: 0 auto;
+    margin: 15px; }
+    body#main div#body div.mainBody div.formRow div.helpBox {
+      float: left;
+      height: 30px;
+      width: 30px;
+      margin: 0px 30px;
+      background-size: 100% 100%;
+      background-image: url("/assets/helpIcon.png"); }
+    body#main div#body div.mainBody div.formRow div.formLabel {
+      float: left;
+      height: auto;
+      width: 200px; }
+    body#main div#body div.mainBody div.formRow div.formInput {
+      float: left;
+      height: auto;
+      width: auto; }
+      body#main div#body div.mainBody div.formRow div.formInput input[type="text"], body#main div#body div.mainBody div.formRow div.formInput input[type="password"] {
+        width: 400px; }
+      body#main div#body div.mainBody div.formRow div.formInput input[type="textarea"] {
+        width: 400px;
+        height: 100px; }
+    body#main div#body div.mainBody div.formRow div.clear {
+      float: left;
+      clear: both; }
+    body#main div#body div.mainBody div.formRow div.submitBlock {
+      float: left;
+      width: 100%;
+      text-align: center;
+      margin: 20px; }
+body#main div#bottom {
+  position: fixed;
+  padding-top: 20px;
+  bottom: 0;
+  width: 100%;
+  height: 15%;
+  background-color: #FFA834;
+  color: #FFF; }
+
+/*# sourceMappingURL=main.css.map */
