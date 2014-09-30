@@ -5,7 +5,7 @@ var basicAuth = require('basic-auth');
 var auth = require('../my_modules/auth');
 
 
-router.use(auth.authorize);
+router.use(auth.httpAuth);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
