@@ -73,6 +73,11 @@ router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	res.redirect('/');
 });
 
+router.get('/logout', function(req, res, next) {
+	req.logout();
+	res.redirect('/');
+});
+
 router.get('/signup', function(req, res, next) {
 	res.render('signup', { title: 'Sign Up' });
 });
