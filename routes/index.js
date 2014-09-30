@@ -51,17 +51,29 @@ passport.deserializeUser(function(id, done) {
 	done(null, { id: id, name: id });
 });
 
+
+router.use(function(req, res, next) {
+	console.log(req.isAuthenticated());
+	if (req.originalUrl !== '/login' && !req.isAuthenticated()) {
+		console.log("not authenticated bitch");
+		res.redirect('login');
+	} else {
+		next();
+	}
+});
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	console.log(req.isAuthenticated());
-	if (req.isAuthenticated()) {
+//	console.log(req.isAuthenticated());
+//	if (req.isAuthenticated()) {
 		res.render('home/index', { 
 			title: 'Express',
 			user: req.user 
 		});
-	} else {
-		res.redirect('login');
-	}
+//	} else {
+//		res.redirect('login');
+//	}
 });
 
 router.get('/login', function(req, res, next) {

@@ -11,3 +11,17 @@ var httpAuth = function (req, res, next) {
 };
 
 exports.httpAuth = httpAuth;
+/*
+var bounce = function (req, res, next) {
+	if (req.originalUrl !== '/login') {
+		if (!req.isAuthenticated()) {
+			console.log("not authenticated bitch");
+			res.redirect('login');
+		}
+	} else {
+		next();
+	}
+};
+
+exports.bounce = bounce;
+*/
