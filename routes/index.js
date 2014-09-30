@@ -1,4 +1,6 @@
 var express = require('express');
+var crypto = require('crypto');
+var mysql = require('mysql');
 var util = require('util');
 var router = express.Router();
 var basicAuth = require('basic-auth');
@@ -9,6 +11,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressSession = require('express-session');
 
+var connection = mysql.createConnection({
+	host     : 'localhost',
+	user     : 'root',
+	password : 'g0disan4sshole',
+	database : 'sunzora1'
+});
 
 router.use(auth.httpAuth); 
 
@@ -23,15 +31,6 @@ router.use(passport.initialize());
 router.use(passport.session());
 
 passport.use(new passportLocal.Strategy(function(username, password, done) {
-	if (username == password) {
-		//we can configure this user object however we wish
-		console.log("it IS the same as the password");
-		done(null, { id: username, name: username });
-	} else {
-		console.log("it is NOT the same as the password");
-		done(null, null);
-	}
-	/*
 	var hash = crypto.createHash('md5').update(password).digest('hex');
 	var sql = 'SELECT * FROM users WHERE email="' + username + '" AND password="' + hash + '" LIMIT 1';
 	connection.query(sql, function(err, rows, fields) {
@@ -41,8 +40,8 @@ passport.use(new passportLocal.Strategy(function(username, password, done) {
 			done(null, null);
 		}
 	});
-	*/
 }));
+
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
 });
