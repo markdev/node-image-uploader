@@ -238,8 +238,42 @@ router.post("/settings/account", function(req, res, next){
 
 router.get('/settings/password', function(req, res, next) {
 	res.render('settings/password', { 
-		user: req.user 
+		user: req.user,
+		errors: [] 
 	});
+});
+
+router.post('/settings/password', function (req, res, next) {
+	if (req.isAuthenticated()) {
+		var errors = [];
+		var originalPass = req.body.originalPass;
+		var hash = crypto.createHash('md5').update(originalPass).digest('hex');
+		var sql = 'SELECT * FROM users WHERE email="' + req.user.name + '"';
+		connection.query(sql, function(err, rows, fields) {
+			if (hash !== String(rows[0].password)) {
+				errors[errors.length] = "That is not the password we have for you.";
+			} else {
+				if (req.body.newPass !== req.body.confirmPass) errors[errors.length] = "Your confirmation did not match the new password";
+				if (req.body.newPass == '') errors[errors.length] = "You must enter a new password";
+				if (req.body.confirmPass == '') errors[errors.length] = "You must confirm your password";
+			}
+			if (errors.length == 0) {
+				//Update this bitch
+				var newHash = crypto.createHash('md5').update(req.body.newPass).digest('hex');
+				var sql = 'UPDATE users SET password="' + newHash + '" where email="' + req.user.name + '" LIMIT 1';
+				connection.query(sql, function(err, rows, fields) {
+					res.redirect('../settings');
+				});
+			} else {
+				res.render('settings/password', {
+					'user': req.user,
+					'errors': errors
+				});					
+			}
+		});
+	} else {
+		res.redirect('../login');
+	}
 });
 
 router.get('/settings/awards', function(req, res, next) {
