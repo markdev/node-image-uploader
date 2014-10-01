@@ -51,7 +51,6 @@ passport.deserializeUser(function(id, done) {
 	done(null, { id: id, name: id });
 });
 
-
 router.use(function(req, res, next) {
 	console.log(req.isAuthenticated());
 	if (req.originalUrl !== '/login' && !req.isAuthenticated()) {
@@ -63,17 +62,16 @@ router.use(function(req, res, next) {
 });
 
 
+//router.locals.myVariable = 'This is my variable';
+//router.set('myVariable', 'This is my variable');
+//var app = express();
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-//	console.log(req.isAuthenticated());
-//	if (req.isAuthenticated()) {
 		res.render('home/index', { 
 			title: 'Express',
 			user: req.user 
 		});
-//	} else {
-//		res.redirect('login');
-//	}
 });
 
 router.get('/login', function(req, res, next) {
@@ -90,7 +88,119 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/signup', function(req, res, next) {
-	res.render('signup', { title: 'Sign Up' });
+	res.render('signup', { user: req.user });
 });
+
+router.get('/search', function(req, res, next) {
+	res.render('home/search', { user: req.user });
+});
+
+
+
+/**
+*	Create
+*/
+router.get('/create', function(req, res, next) {
+	res.render('create/index', { user: req.user });
+});
+
+router.get('/create/edit', function(req, res, next) {
+	res.render('create/edit', { user: req.user });
+});
+
+router.get('/create/new', function(req, res, next) {
+	res.render('create/new', { user: req.user });
+});
+
+router.get('/create/police', function(req, res, next) {
+	res.render('create/police', { user: req.user });
+});
+
+
+
+/**
+*	Messages
+*/
+router.get('/messages', function(req, res, next) {
+	res.render('messages/index', { user: req.user });
+});
+
+router.get('/messages/message', function(req, res, next) {
+	res.render('messages/message', { user: req.user });
+});
+
+
+
+/**
+*	Judge
+*/
+router.get('/judge', function(req, res, next) {
+	res.render('judge/index', { user: req.user });
+});
+
+router.get('/judge/contest', function(req, res, next) {
+	res.render('judge/contest', { user: req.user });
+});
+
+router.get('/judge/report', function(req, res, next) {
+	res.render('judge/report', { user: req.user });
+});
+
+
+
+
+/**
+*	Compete
+*/
+router.get('/compete', function(req, res, next) {
+	res.render('compete/index', { user: req.user });
+});
+
+router.get('/compete/results', function(req, res, next) {
+	res.render('compete/results', { user: req.user });
+});
+
+router.get('/compete/playByPlay', function(req, res, next) {
+	res.render('compete/playByPlay', { user: req.user });
+});
+
+router.get('/compete/submit', function(req, res, next) {
+	res.render('compete/submit', { user: req.user });
+});
+
+
+
+
+/**
+*	Settings
+*/
+router.get('/settings', function(req, res, next) {
+	res.render('settings/index', { user: req.user });
+});
+
+router.get('/settings/account', function(req, res, next) {
+	res.render('settings/account', { user: req.user });
+});
+
+router.get('/settings/password', function(req, res, next) {
+	res.render('settings/password', { 
+		user: req.user 
+	});
+});
+
+router.get('/settings/awards', function(req, res, next) {
+	res.render('settings/awards', { user: req.user });
+});
+
+router.get('/settings/terms', function(req, res, next) {
+	res.render('settings/terms', { user: req.user });
+});
+
+router.get('/settings/contact', function(req, res, next) {
+	res.render('settings/contact', { user: req.user });
+});
+
+
+
 
 module.exports = router;
