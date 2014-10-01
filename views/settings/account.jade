@@ -8,7 +8,7 @@ block content
 		a.backLink(href="/settings") <- Back To Settings
 		hr
 		h1 My Account
-		form(action="/settings/account", method="post")
+		form(action="/settings/account", method="post", enctype="multipart/form-data")
 			div.formRow
 				div.helpBox
 				div.formLabel
@@ -192,7 +192,7 @@ block content
 				div.formLabel
 					label Avatar:
 				div.formInput
-					input(type="file", name="avatar", id="avatar", enctype="multipart/form-data")
+					input#payload(type="file" name="myFile" accept="image/*")
 				div.clear
 			br
 

@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multer = require('multer');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -19,6 +20,10 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer({
+    // add configuration details here
+    dest: "./uploads/"
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -33,6 +38,7 @@ app.use(function(req, res, next) {
     next(err);
 });
 
+// error handlers
 
 // development error handler
 // will print stacktrace
@@ -59,3 +65,4 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 app.listen(80);
+//THIS IS THE SUNZORA ONE!!!!

@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs');
 var crypto = require('crypto');
 var mysql = require('mysql');
 var util = require('util');
@@ -180,6 +181,22 @@ router.get('/settings', function(req, res, next) {
 
 router.get('/settings/account', function(req, res, next) {
 	res.render('settings/account', { user: req.user });
+});
+
+router.post("/settings/account", function(req, res, next){ 
+	if (req.files) { 
+		console.log(util.inspect(req.files));
+		if (req.files.myFile.size === 0) {
+		    return next(new Error("Hey, first would you select a file?"));
+		}
+		fs.exists(req.files.myFile.path, function(exists) { 
+			if(exists) { 
+				res.end("Got your file!"); 
+			} else { 
+				res.end("Well, there is no magic for those who don’t believe in it!"); 
+			} 
+		}); 
+	} 
 });
 
 router.get('/settings/password', function(req, res, next) {
