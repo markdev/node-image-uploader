@@ -19,6 +19,7 @@
     "passport-http": "~0.2.2",
     "express-session": "~1.8.2",
     "mysql": "~2.5.1",
-    "multer": "~0.1.4"
+    "multer": "~0.1.4",
+    "validator": "~3.19.0"
   }
 }

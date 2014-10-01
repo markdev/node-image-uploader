@@ -11,6 +11,7 @@ var passportLocal = require('passport-local');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressSession = require('express-session');
+var validator = require('validator');
 
 var connection = mysql.createConnection({
 	host     : 'localhost',
@@ -54,7 +55,7 @@ passport.deserializeUser(function(id, done) {
 
 router.use(function(req, res, next) {
 	console.log(req.isAuthenticated());
-	if (req.originalUrl !== '/login' && !req.isAuthenticated()) {
+	if (req.originalUrl !== '/login' && req.originalUrl !== '/signup' && !req.isAuthenticated()) {
 		console.log("not authenticated bitch");
 		res.redirect('login');
 	} else {
@@ -89,13 +90,49 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/signup', function(req, res, next) {
-	res.render('signup', { user: req.user });
+	res.render('signup', { 
+		user: req.user,
+		errors: [] 
+	});
 });
 
 router.get('/search', function(req, res, next) {
 	res.render('home/search', { user: req.user });
 });
 
+router.post('/signup', function(req, res, next) {
+	var errors = [];
+	var email = req.body.email;
+	var sql = 'SELECT * FROM users WHERE email="' + email + '"';
+	connection.query(sql, function(err, rows, fields) {
+		// this is ghetto but that's how we're doing this
+		var existingRows = 0;
+		for (var key in rows) {
+			existingRows++;
+		}
+		if (existingRows > 0) errors[errors.length] = "That email address is already in use";
+		var password1 = req.body.password1;
+		var password2 = req.body.password2;
+		if (!validator.isEmail(email)) errors[errors.length] = "Please use a valid email address";
+		if (password1 !== password2) errors[errors.length] = "Your confirm email must match";
+		if (password1 == '') errors[errors.length] = "You must enter a password";
+		if (password2 == '') errors[errors.length] = "You must confirm your password";
+		if (errors.length == 0) {
+			// Create the entry!
+			var hash = crypto.createHash('md5').update(password1).digest('hex');
+			var sql = 'INSERT INTO users (email, password) VALUES ("' + email + '", "' + hash + '")';
+			connection.query(sql, function(err, rows, fields) {
+				// now it should log them in automatically somehow...
+				res.redirect('login');
+			});
+		} else {
+			// redirect to signup with errors
+			res.render('signup', {
+				"errors": errors
+			});
+		}
+	});
+});
 
 
 /**

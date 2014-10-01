@@ -1,5 +1,28 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+html
+	head
+		link(rel='stylesheet', href='/css/main.css', type='text/css')
+		title Sign Up for Sunzora
+	body#signUp
+		div#top 
+			h2 Sign Up For
+			div#titleBox
+		div#bottom
+			ul#errorList
+				for error, i in errors
+					li.error #{error}
+			form(action="/signup", method="post")
+				div.dataField
+					label Email Address:
+					input(type="text", name="email", id="email")
+					br
+				div.dataField
+					label Type Password:
+					input(type="password", name="password1", id="password1")
+					br
+				div.dataField
+					label Confirm Password:
+					input(type="password", name="password2", id="password2")
+					br
+				div.dataField
+					input(type="submit", value="That's it!")
