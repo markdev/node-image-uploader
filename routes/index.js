@@ -156,6 +156,9 @@ router.get('/create/new', function(req, res, next) {
 
 router.post('/create/new', function(req, res, next) {
 	console.log(util.inspect(req.body));
+	console.log(util.inspect(req.files));
+	console.log(util.inspect(req.files.chooseFile));
+	console.log(util.inspect(req.files.chooseFile.name));
 });
 
 router.get('/create/police', function(req, res, next) {
