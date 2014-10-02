@@ -8,6 +8,9 @@ block content
 		a.backLink(href="/settings") <- Back To Settings
 		hr
 		h1 My Account
+		ul#errorList
+			for error, i in errors
+				li.error #{error}
 		form(action="/settings/account", method="post", enctype="multipart/form-data")
 			div.formRow
 				div.helpBox

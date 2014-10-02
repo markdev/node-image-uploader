@@ -57,7 +57,7 @@ router.use(function(req, res, next) {
 	console.log(req.isAuthenticated());
 	if (req.originalUrl !== '/login' && req.originalUrl !== '/signup' && !req.isAuthenticated()) {
 		console.log("not authenticated bitch");
-		res.redirect('login');
+		res.redirect('/login');
 	} else {
 		next();
 	}
@@ -147,7 +147,15 @@ router.get('/create/edit', function(req, res, next) {
 });
 
 router.get('/create/new', function(req, res, next) {
-	res.render('create/new', { user: req.user });
+	res.render('create/new', {
+		user: req.user,
+		errors: [] 
+	});
+});
+
+
+router.post('/create/new', function(req, res, next) {
+	console.log(util.inspect(req.body));
 });
 
 router.get('/create/police', function(req, res, next) {
@@ -217,23 +225,34 @@ router.get('/settings', function(req, res, next) {
 });
 
 router.get('/settings/account', function(req, res, next) {
-	res.render('settings/account', { user: req.user });
+	res.render('settings/account', { 
+		user: req.user,
+		errors: []
+	});
 });
 
-router.post("/settings/account", function(req, res, next){ 
-	if (req.files) { 
-		console.log(util.inspect(req.files));
-		if (req.files.myFile.size === 0) {
-		    return next(new Error("Hey, first would you select a file?"));
+router.post('/settings/account', function(req, res, next) { 
+	if (req.isAuthenticated()) {	
+		if (req.files) { 
+			console.log(util.inspect(req.files));
+			if (!req.files.myFile || req.files.myFile.size === 0) {
+			    //return next(new Error("Hey, first would you select a file?"));
+			    res.render('settings/account', {
+			    	user: req.user,
+			    	errors: ['select a damn file']
+			    });
+			}
+			fs.exists(req.files.myFile.path, function(exists) { 
+				if(exists) { 
+					res.end("Got your file!"); 
+				} else { 
+					res.end("Well, there is no magic for those who don’t believe in it!"); 
+				} 
+			});
 		}
-		fs.exists(req.files.myFile.path, function(exists) { 
-			if(exists) { 
-				res.end("Got your file!"); 
-			} else { 
-				res.end("Well, there is no magic for those who don’t believe in it!"); 
-			} 
-		}); 
-	} 
+	} else {
+		res.redirect('../login');
+	}
 });
 
 router.get('/settings/password', function(req, res, next) {

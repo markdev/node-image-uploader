@@ -8,7 +8,7 @@ CREATE TABLE users (
 	id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	email varchar(40),
 	password varchar(40),
-	avatar varchar(12),
+	avatar varchar(40),
 	sex enum('male', 'female', 'other'),
 	dob datetime,
 	createdOn datetime
@@ -71,5 +71,5 @@ CREATE TABLE tagAssociations (
 );
 
 
-INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ('mark.karavan@gmail.com', 'ea82410c7a9991816b5eeeebe195e20a', '123456', 'male', '1983-04-07 18:34:00', NOW());
-INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ('david@hadden.com', '1610838743cc90e3e4fdda748282d9b8', '234567', 'male', '1964-04-07 18:34:00', NOW());
+INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ('mark.karavan@gmail.com', 'ea82410c7a9991816b5eeeebe195e20a', '', 'male', '1983-04-07 18:34:00', NOW());
+INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ('david@hadden.com', '1610838743cc90e3e4fdda748282d9b8', '', 'male', '1964-04-07 18:34:00', NOW());
