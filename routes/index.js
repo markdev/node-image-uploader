@@ -157,27 +157,46 @@ router.get('/create/new', function(req, res, next) {
 router.post('/create/new', function(req, res, next) {
 	console.log(util.inspect(req.body));
 	console.log(util.inspect(req.files));
-	console.log(util.inspect(req.files.chooseFile));
-	console.log(util.inspect(req.files.chooseFile.name));
+	if (req.files.chooseFile) {
+		console.log(util.inspect(req.files.chooseFile));
+		console.log(util.inspect(req.files.chooseFile.name));
+	}
 
 	var errors = [];
-	var title = req.body.title;
-	var tags = req.body.tags;
-	var banner = req.files.chooseFile.name;
-	var rules = req.body.rules;
-	var month = req.body.month;
-	var day = req.body.day;
-	var hour = req.body.hour;
-	var minute = req.body.minute;
-
-	console.log("title: " + title);
-	console.log("tags: " + tags);
-	console.log("banner: " + banner);
-	console.log("rules: " + rules);
-	console.log("month: " + month);
-	console.log("day: " + day);
-	console.log("hour: " + hour);
-	console.log("minute: " + minute);
+	var validationObj = {};
+	validationObj.title = req.body.title;
+	validationObj.tags = req.body.tags;
+	validationObj.banner = '';
+	if (req.files.chooseFile) validationObj.banner = req.files.chooseFile.name;
+	validationObj.rules = req.body.rules;
+	validationObj.month = req.body.month;
+	validationObj.day = req.body.day;
+	validationObj.hour = req.body.hour;
+	validationObj.minute = req.body.minute;
+	var validationArray = ['title', 'tags', 'banner', 'rules', 'month', 'day', 'hour', 'minute'];
+	for (var i in validationArray) {
+		if (validationObj[validationArray[i]] == '' || validationObj[validationArray[i]] == undefined) {
+			errors[errors.length] = "You must have a " + validationArray[i];
+		}
+	}
+	if (errors.length == 0) {
+		console.log(validationArray);
+	//		create the contest
+	//		move the file to the right location
+	//		redirect to my contests, where I can now see the contest!
+	} else {
+		if (validationObj.banner !== '') {
+			fs.unlink('uploads/' + validationObj.banner, function (err) {
+				if (err) throw err;
+				console.log('successfully deleted ' + validationObj.banner);	
+			});
+		}
+		console.log("title is: " + validationObj.title);
+		res.render('create/new', {
+			user: req.user,
+			errors: errors 
+		});
+	}
 
 	// first do all the basic validation
 	// 	title must exist

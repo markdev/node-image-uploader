@@ -8,6 +8,9 @@ block content
 		a.backLink(href="/create") <- Back To My Contests
 		hr
 		h1 Create A New Contest
+		ul#errorList
+			for error, i in errors
+				li.error #{error}
 		form(action="/create/new", method="post", enctype="multipart/form-data")
 			div.formRow
 				div.helpBox
