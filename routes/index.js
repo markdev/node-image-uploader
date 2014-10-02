@@ -159,6 +159,40 @@ router.post('/create/new', function(req, res, next) {
 	console.log(util.inspect(req.files));
 	console.log(util.inspect(req.files.chooseFile));
 	console.log(util.inspect(req.files.chooseFile.name));
+
+	var errors = [];
+	var title = req.body.title;
+	var tags = req.body.tags;
+	var banner = req.files.chooseFile.name;
+	var rules = req.body.rules;
+	var month = req.body.month;
+	var day = req.body.day;
+	var hour = req.body.hour;
+	var minute = req.body.minute;
+
+	console.log("title: " + title);
+	console.log("tags: " + tags);
+	console.log("banner: " + banner);
+	console.log("rules: " + rules);
+	console.log("month: " + month);
+	console.log("day: " + day);
+	console.log("hour: " + hour);
+	console.log("minute: " + minute);
+
+	// first do all the basic validation
+	// 	title must exist
+	// 	tags must exist
+	// 	banner must exist
+	// 	rules must exist
+	// 	deadline must exist
+	//	if they don't work
+	//		send errors and delete the file from uploads
+	// 	else
+	//		create the contest
+	//		move the file to the right location
+	//		redirect to my contests, where I can now see the contest!
+
+
 });
 
 router.get('/create/police', function(req, res, next) {
