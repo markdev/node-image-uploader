@@ -21,8 +21,8 @@ CREATE TABLE contests (
 	banner varchar(12),
 	rules text,
 	deadline datetime,
-	judging tinyint,
-	competition tinyint,
+	judging enum('public', 'invite'),
+	competition enum('public', 'invite'),
 	FOREIGN KEY (uId) REFERENCES users(id)
 );
 

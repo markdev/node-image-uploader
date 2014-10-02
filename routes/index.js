@@ -37,7 +37,7 @@ passport.use(new passportLocal.Strategy(function(username, password, done) {
 	var sql = 'SELECT * FROM users WHERE email="' + username + '" AND password="' + hash + '" LIMIT 1';
 	connection.query(sql, function(err, rows, fields) {
 		if (rows[0] && username === rows[0].email && hash === rows[0].password) {
-			done(null, { id: username, name: username });
+			done(null, { id: rows[0].id, name: username });
 		} else {
 			done(null, null);
 		}
@@ -155,13 +155,6 @@ router.get('/create/new', function(req, res, next) {
 
 
 router.post('/create/new', function(req, res, next) {
-	console.log(util.inspect(req.body));
-	console.log(util.inspect(req.files));
-	if (req.files.chooseFile) {
-		console.log(util.inspect(req.files.chooseFile));
-		console.log(util.inspect(req.files.chooseFile.name));
-	}
-
 	var errors = [];
 	var validationObj = {};
 	validationObj.title = req.body.title;
@@ -173,6 +166,8 @@ router.post('/create/new', function(req, res, next) {
 	validationObj.day = req.body.day;
 	validationObj.hour = req.body.hour;
 	validationObj.minute = req.body.minute;
+	validationObj.judging = req.body.judging;
+	validationObj.competition = req.body.competition;
 	var validationArray = ['title', 'tags', 'banner', 'rules', 'month', 'day', 'hour', 'minute'];
 	for (var i in validationArray) {
 		if (validationObj[validationArray[i]] == '' || validationObj[validationArray[i]] == undefined) {
@@ -180,10 +175,27 @@ router.post('/create/new', function(req, res, next) {
 		}
 	}
 	if (errors.length == 0) {
-		console.log(validationArray);
-	//		create the contest
-	//		move the file to the right location
-	//		redirect to my contests, where I can now see the contest!
+		console.log("month: " + validationObj.month + typeof validationObj.month);
+		console.log("day: " + validationObj.day + typeof validationObj.day);
+		console.log("hour: " + validationObj.hour + typeof validationObj.hour);
+		console.log("minute: " + validationObj.minute + typeof validationObj.minute);
+		var datetime = '2014-' 
+			+ validationObj.month + '-' 
+			+ validationObj.day + ' ' 
+			+ validationObj.hour + ':' 
+			+ validationObj.minute + ':00';
+		var sql = 'INSERT INTO contests (uId, title, banner, rules, deadline, judging, competition) VALUES (' +
+			'"' + req.user.id + '", ' +
+			'"' + validationObj.title + '", ' +
+			'"' + validationObj.banner + '", ' +
+			'"' + validationObj.rules + '", ' +
+			'"' + datetime + '", ' +
+			'"' + validationObj.judging + '", ' +
+			'"' + validationObj.competition + '") ';
+		connection.query(sql, function(err, rows, fields) {
+			// just move the file to the right place eventually
+			res.redirect('/create');
+		});
 	} else {
 		if (validationObj.banner !== '') {
 			fs.unlink('uploads/' + validationObj.banner, function (err) {
