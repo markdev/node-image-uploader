@@ -18,7 +18,7 @@ CREATE TABLE contests (
 	id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	uId int,
 	title varchar(40),
-	banner varchar(12),
+	banner varchar(40),
 	rules text,
 	deadline datetime,
 	judging enum('public', 'invite'),
