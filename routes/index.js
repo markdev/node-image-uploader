@@ -208,8 +208,31 @@ router.post('/create/new', function(req, res, next) {
 			'"' + validationObj.competition + '") ';
 		connection.query(sql, function(err, rows, fields) {
 			// just move the file to the right place eventually
+			var sql = "SELECT * FROM tags";
+			connection.query(sql, function(err, rows, fields) {
+				console.log(rows);
+				var rowRemap = [];
+				for (var i = 0; i<rows.length; i++) {
+					rowRemap[rowRemap.length] = rows[i].content;
+				}
+				console.log(rowRemap);
+				var tags = validationObj.tags.split(',');
+				for (var i=0; i < tags.length; i++) {
+					var notInArray = true;
+					for (var j=0; j<rowRemap.length; j++) {
+						if (tags[i] == rowRemap[j]) notInArray = false;
+					}
+					if (notInArray == true) {
+						var sql = 'INSERT INTO tags (content) VALUES ("' + tags[i] + '")';
+						connection.query(sql, function(err, rows, fields) {
+							console.log(sql);
+						});
+					}
+				};
+			});
 			res.redirect('/create');
 		});
+
 	} else {
 		if (validationObj.banner !== '') {
 			fs.unlink('uploads/' + validationObj.banner, function (err) {
