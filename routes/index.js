@@ -207,6 +207,7 @@ router.post('/create/new', function(req, res, next) {
 			'"' + validationObj.judging + '", ' +
 			'"' + validationObj.competition + '") ';
 		connection.query(sql, function(err, rows, fields) {
+			var contestId = rows.insertId;
 			// just move the file to the right place eventually
 			var sql = "SELECT * FROM tags";
 			connection.query(sql, function(err, rows, fields) {
@@ -224,8 +225,14 @@ router.post('/create/new', function(req, res, next) {
 					}
 					if (notInArray == true) {
 						var sql = 'INSERT INTO tags (content) VALUES ("' + tags[i] + '")';
-						connection.query(sql, function(err, rows, fields) {
-							console.log(sql);
+						connection.query(sql, function(err1, rows1, fields1) {
+							console.log(rows1);
+							console.log(rows1.insertId);
+							var newSql = 'INSERT INTO tagAssociations (tId, cId) VALUES (' + rows1.insertId + ', ' + contestId + ')';
+							console.log(newSql);
+							connection.query(newSql, function (err2, rows2, fields2) {
+
+							});
 						});
 					}
 				};
