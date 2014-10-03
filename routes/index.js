@@ -45,7 +45,7 @@ passport.use(new passportLocal.Strategy(function(username, password, done) {
 }));
 
 passport.serializeUser(function(user, done) {
-	done(null, user.name);
+	done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -81,7 +81,9 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
-	res.redirect('/');
+	//res.redirect('/');
+	//for dev purposes:
+	res.redirect('/create/new');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -139,7 +141,19 @@ router.post('/signup', function(req, res, next) {
 *	Create
 */
 router.get('/create', function(req, res, next) {
-	res.render('create/index', { user: req.user });
+	console.log(util.inspect(req.user));
+	var getContestsByUserId = function(id) {
+		var sql = 'SELECT * FROM contests WHERE uId="' + id + '"';
+		connection.query(sql, function(err, rows, fields) {
+			return rows;
+		});
+	};
+	var contests = getContestsByUserId(req.user.id);
+	console.log(contests);
+	res.render('create/index', { 
+		user: req.user, 
+		contests: contests
+	});
 });
 
 router.get('/create/edit', function(req, res, next) {
@@ -209,21 +223,6 @@ router.post('/create/new', function(req, res, next) {
 			errors: errors 
 		});
 	}
-
-	// first do all the basic validation
-	// 	title must exist
-	// 	tags must exist
-	// 	banner must exist
-	// 	rules must exist
-	// 	deadline must exist
-	//	if they don't work
-	//		send errors and delete the file from uploads
-	// 	else
-	//		create the contest
-	//		move the file to the right location
-	//		redirect to my contests, where I can now see the contest!
-
-
 });
 
 router.get('/create/police', function(req, res, next) {

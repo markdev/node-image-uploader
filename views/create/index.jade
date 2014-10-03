@@ -4,12 +4,16 @@ block title
 	title My Contests
 
 block content
-	h1 My Contests
-	ul
-		li
-			a(href="/create/edit") Edit Contests
-		li
-			a(href="/create/new") New Contest
-		li
-			a(href="/create/police") Police Contest
+	div.mainBody
+		a.backLink(href="/create/new") + Create a New Contest
+		hr
+		h1 My Contests
+		p #{contests}
+		ul
+			li
+				a(href="/create/edit") Edit Contests
+			li
+				a(href="/create/new") New Contest
+			li
+				a(href="/create/police") Police Contest
 	

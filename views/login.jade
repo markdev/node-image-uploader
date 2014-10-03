@@ -2,6 +2,7 @@ doctype html
 html
 	head
 		link(rel='stylesheet', href='/css/main.css', type='text/css')
+		script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
 		title Sign Up for Sunzora
 	body#signUp
 		div#top 
@@ -18,9 +19,15 @@ html
 					input(type="password", name="password", id="password")
 					br
 				div.dataField
-					input(type="submit", value="Log In")
+					input(type="submit", value="Log In", id="submit")
 					br
 					br
 					br
 				div.dataField
 					a(href="/signup") Not a user?  Sign up.
+		script.
+			$(document).ready(function(){
+				$('#username').val('mark.karavan@gmail.com');
+				$('#password').val('mark');
+				$('#submit').click();
+			});
