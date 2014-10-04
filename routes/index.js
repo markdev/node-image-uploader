@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/create/edit/1');
+	res.redirect('/create/new');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -266,6 +266,30 @@ router.get('/create/new', function(req, res, next) {
 
 
 router.post('/create/new', function(req, res, next) {
+
+	var createTagAssociation = function (tId, cId) {
+		var sql = 'INSERT INTO tagAssociations (tId, cId) VALUES (' + tId + ', ' + cId + ')';
+		connection.query(sql, function (err, rows, fields) {
+			return;
+		});
+	};
+
+	var processTag = function (rawTag, contestId) {
+		var tag = String(rawTag).trim();
+		var sql = 'SELECT * FROM tags WHERE content="' + tag + '"';
+		connection.query(sql, function(err, rows, fields) {
+			if (rows.length > 0) { //if the tag already exists
+				var tId = rows[0].id;
+				createTagAssociation(tId, contestId);
+			} else {
+				var sql = 'INSERT INTO tags (content) VALUES ("' + tag + '")';
+				connection.query(sql, function (err, rows, fields) {
+					createTagAssociation(rows.insertId, contestId);
+				});
+			}
+		});		
+	};
+
 	var errors = [];
 	var validationObj = {};
 	validationObj.title = req.body.title;
@@ -309,35 +333,10 @@ router.post('/create/new', function(req, res, next) {
 			fs.rename('uploads/' + validationObj.banner, 'public/banners/' + validationObj.banner, function(err) {
 				console.log('renamed!');
 			});
-
-			var sql = "SELECT * FROM tags";
-			connection.query(sql, function(err, rows, fields) {
-				console.log(rows);
-				var rowRemap = [];
-				for (var i = 0; i<rows.length; i++) {
-					rowRemap[rowRemap.length] = rows[i].content;
-				}
-				console.log(rowRemap);
-				var tags = validationObj.tags.split(',');
-				for (var i=0; i < tags.length; i++) {
-					var notInArray = true;
-					for (var j=0; j<rowRemap.length; j++) {
-						if (tags[i] == rowRemap[j]) notInArray = false;
-					}
-					if (notInArray == true) {
-						var sql = 'INSERT INTO tags (content) VALUES ("' + tags[i].trim() + '")';
-						connection.query(sql, function(err1, rows1, fields1) {
-							console.log(rows1);
-							console.log(rows1.insertId);
-							var newSql = 'INSERT INTO tagAssociations (tId, cId) VALUES (' + rows1.insertId + ', ' + contestId + ')';
-							console.log(newSql);
-							connection.query(newSql, function (err2, rows2, fields2) {
-
-							});
-						});
-					}
-				};
-			});
+			var tagArray = req.body.tags.split(",");
+			for (var i in tagArray) {
+				processTag(tagArray[i], contestId);
+			}
 			res.redirect('/create');
 		});
 
