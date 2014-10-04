@@ -160,7 +160,7 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 		var month = monthBackMap[deadlineArray[1]];
 		var day = deadlineArray[2];
 		var hour = deadlineArray[4].split(":")[0];
-		var minute = deadlineArray[4].split(":")[0];
+		var minute = deadlineArray[4].split(":")[1];
 		console.log("month: " + month);
 		console.log("day: " + day);
 		console.log("hour: " + hour);
@@ -182,9 +182,14 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 		for (var i in months) {
 			if (months[i].num == month) {
 				months[i].selected = true;
-				console.log(months[i]);
 			}
 		}
+		var days = [];
+		for (var i = 1; i<=31; i++) days[days.length] = i;
+		var hours = [];
+		for (var i = 1; i<=23; i++) hours[hours.length] = i;
+		var minutes = [];
+		for (var i = 5; i<=55; i+=5) minutes[minutes.length] = i;
 		res.render('create/edit', { 
 			user: req.user, 
 			contest: rows[0],
@@ -192,8 +197,11 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 			month: month,
 			months: months,
 			day: day,
+			days: days,
 			hour: hour,
-			minute: minute
+			hours: hours,
+			minute: minute,
+			minutes: minutes
 		});
 	});
 });
