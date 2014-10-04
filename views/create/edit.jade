@@ -26,7 +26,7 @@ block content
 				div.formLabel
 					label Tags:
 				div.formInput
-					input(type="text" name="tags" id="tags")
+					input(type="text" name="tags" id="tags" value="#{tags}")
 				div.clear
 			br
 
@@ -44,7 +44,7 @@ block content
 				div.formLabel
 					label Rules:
 				div.formInput
-					input(type="textarea" name="rules" id="rules")
+					input(type="textarea" name="rules" id="rules" value="#{rules}")
 				div.clear
 			br
 
@@ -90,11 +90,18 @@ block content
 				div.formLabel
 					label Judging:
 				div.formInput
-					input(type="radio" name="judging" value="public" checked="true")
-					label Public
-					br
-					input(type="radio" name="judging" value="invite")
-					label Invite-Only
+					if (judging == "public")
+						input(type="radio" name="judging" value="public" checked)
+						label Public
+						br
+						input(type="radio" name="judging" value="invite")
+						label Invite-Only
+					else
+						input(type="radio" name="judging" value="public")
+						label Public
+						br
+						input(type="radio" name="judging" value="invite" checked)
+						label Invite-Only
 				div.clear
 			br
 
@@ -103,15 +110,22 @@ block content
 				div.formLabel
 					label Competition:
 				div.formInput
-					input(type="radio" name="competition" value="public" checked="true")
-					label Public
-					br
-					input(type="radio" name="competition" value="invite")
-					label Invite-Only
+					if (competition == "public")
+						input(type="radio" name="competition" value="public" checked)
+						label Public
+						br
+						input(type="radio" name="competition" value="invite")
+						label Invite-Only
+					else
+						input(type="radio" name="competition" value="public")
+						label Public
+						br
+						input(type="radio" name="competition" value="invite" checked)
+						label Invite-Only
 				div.clear
 			
 			div.clear
 
 			div.formRow
 				div.submitBlock
-					input(type="submit" value="Create New Contest")
+					input(type="submit" value="Save changes")

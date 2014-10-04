@@ -161,6 +161,9 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 		var day = deadlineArray[2];
 		var hour = deadlineArray[4].split(":")[0];
 		var minute = deadlineArray[4].split(":")[1];
+		var rules = rows[0].rules;
+		var judging = rows[0].judging;
+		var competition = rows[0].competition;
 		console.log("month: " + month);
 		console.log("day: " + day);
 		console.log("hour: " + hour);
@@ -190,18 +193,31 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 		for (var i = 1; i<=23; i++) hours[hours.length] = i;
 		var minutes = [];
 		for (var i = 5; i<=55; i+=5) minutes[minutes.length] = i;
-		res.render('create/edit', { 
-			user: req.user, 
-			contest: rows[0],
-			errors: [],
-			month: month,
-			months: months,
-			day: day,
-			days: days,
-			hour: hour,
-			hours: hours,
-			minute: minute,
-			minutes: minutes
+		// and now, the tags
+		var sql = "SELECT content FROM tags JOIN tagAssociations ON tags.id = tagAssociations.tId WHERE tagAssociations.cId = " + contestId;
+		connection.query(sql, function(err, rows, fields) {
+console.log(judging);
+console.log(competition);
+			var tagArray = [];
+			for (var i in rows) tagArray[tagArray.length] = rows[i].content;
+			var tagString = tagArray.join(", ");
+			res.render('create/edit', { 
+				user: req.user, 
+				contest: rows[0],
+				errors: [],
+				tags: tagString,
+				rules: rules,
+				month: month,
+				months: months,
+				day: day,
+				days: days,
+				hour: hour,
+				hours: hours,
+				minute: minute,
+				minutes: minutes,
+				judging: judging,
+				competition: competition
+			});
 		});
 	});
 });
@@ -274,7 +290,7 @@ router.post('/create/new', function(req, res, next) {
 						if (tags[i] == rowRemap[j]) notInArray = false;
 					}
 					if (notInArray == true) {
-						var sql = 'INSERT INTO tags (content) VALUES ("' + tags[i] + '")';
+						var sql = 'INSERT INTO tags (content) VALUES ("' + tags[i].trim() + '")';
 						connection.query(sql, function(err1, rows1, fields1) {
 							console.log(rows1);
 							console.log(rows1.insertId);
