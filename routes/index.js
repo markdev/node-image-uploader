@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/create/edit/1');
+	res.redirect('/search');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -99,7 +99,49 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.get('/search', function(req, res, next) {
-	res.render('home/search', { user: req.user });
+	res.render('home/search', {
+		user: req.user,
+		contests: [ 
+		/*
+			{ 	id: 1,
+    			uId: 1,
+			    title: 'My cat pics',
+			    banner: '498aee0a2aa0035c598c537380719177.jpg',
+			    rules: 'Must be a cat.  Must be cute.',
+			    deadline: 'Wed May 07 2014 10:35:00 GMT+0000 (UTC)',
+			    judging: 'public',
+			    competition: 'public',
+			    tId: 4,
+			    cId: 1 
+			},
+			{	id: 2,
+			    uId: 1,
+			    title: 'Mo cat pics',
+			    banner: '498ee22c1e64c94770acd07cf6dff527.jpg',
+			    rules: 'Must be a cat.  Must be cute.',
+			    deadline: 'Wed Jan 01 2014 01:00:00 GMT+0000 (UTC)',
+			    judging: 'public',
+			    competition: 'public',
+			    tId: 4,
+			    cId: 2
+			} */
+		] 
+	});
+});
+
+router.post('/search', function(req, res, next) {
+	// first we are going to search for tags
+	console.log(req.body.search);
+
+	var sql = 'SELECT * FROM contests JOIN tagAssociations ON contests.id = tagAssociations.cId WHERE tagAssociations.tId=(SELECT id FROM tags WHERE content="' + req.body.search + '")';
+	console.log(sql);
+	connection.query(sql, function(err, rows, fields) {
+		console.log(rows);
+		res.render('home/search', {
+			user: req.user,
+			contests: rows 
+		});
+	});
 });
 
 router.post('/signup', function(req, res, next) {

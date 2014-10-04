@@ -5,7 +5,24 @@ block title
 
 block content
 	div.mainBody
-		div#searchBar
-			label Search by tag: &nbsp;
-			input(type="text" name="search" id="search")
-			input(type="submit" id="submit")
+		form(action="/search", method="post")
+			div#searchBar
+				label Search by tag: &nbsp;
+				input(type="text" name="search" id="search")
+				input(type="submit" id="submit")
+		hr
+		h1 My Contests
+		table#contests
+			each contest, i in contests
+				tr(class=(i % 2 == 0) ? 'odd' : 'even')
+					td.thumbnail
+						img.thumbnail(src="/banners/#{contest.banner}")
+					td.title
+						a(href="/create/edit/#{contest.id}")
+							p #{contest.title}
+					td.entries
+						p entries here
+					td.judges
+						p judges here
+					td.deadline
+						p #{contest.deadline}
