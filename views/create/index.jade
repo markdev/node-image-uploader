@@ -12,7 +12,7 @@ block content
 			each contest, i in contests
 				tr(class=(i % 2 == 0) ? 'odd' : 'even')
 					td.thumbnail
-						img.thumbnail(src="/assets/#{contest.banner}")
+						img.thumbnail(src="/banners/#{contest.banner}")
 					td.title
 						a(href="/create/edit/#{contest.id}")
 							p #{contest.title}

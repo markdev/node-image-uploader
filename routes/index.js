@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/create');
+	res.redirect('/create/new');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -148,25 +148,48 @@ router.get('/create', function(req, res, next) {
 			contests: rows
 		});
 	});
-
-	/*
-	console.log(util.inspect(req.user));
-	var getContestsByUserId = function(id) {
-		var sql = 'SELECT * FROM contests WHERE uId="' + id + '"';
-		connection.query(sql, function(err, rows, fields) {
-			return rows;
-		});
-	};
-	var contests = getContestsByUserId(req.user.id);
-	console.log(contests);
-	res.render('create/index', { 
-		user: req.user, 
-		contests: contests
-	}); */
 });
 
-router.get('/create/edit', function(req, res, next) {
-	res.render('create/edit', { user: req.user });
+router.get('/create/edit/:contestid?', function(req, res, next) {
+	var contestId = req.params.contestid;
+	var sql = 'SELECT * FROM contests WHERE id="' + contestId + '" LIMIT 1';
+	connection.query(sql, function (err, rows, fields) {
+		var deadlineArray = String(rows[0].deadline).split(" ");
+		console.log(deadlineArray);
+		var monthBackMap = { "Jan" : 1, "Feb" : 2, "Mar" : 3, "Apr" : 4, "May" : 5, "Jun" : 6, "Jul" : 7, "Aug" : 8, "Sep" : 9, "Oct" : 10, "Nov" : 11, "Dec" : 12 }
+		var month = monthBackMap[deadlineArray[1]];
+		var day = deadlineArray[2];
+		var hour = deadlineArray[4].split(":")[0];
+		var minute = deadlineArray[4].split(":")[0];
+		console.log("month: " + month);
+		console.log("day: " + day);
+		console.log("hour: " + hour);
+		console.log("minute: " + minute);
+		var months = [
+			{abbrev: "Jan", name: "January"},
+			{abbrev: "Feb", name: "February"},
+			{abbrev: "Mar", name: "March"},
+			{abbrev: "Apr", name: "April"},
+			{abbrev: "May", name: "May"},
+			{abbrev: "Jun", name: "June"},
+			{abbrev: "Jul", name: "July"},
+			{abbrev: "Aug", name: "August"},
+			{abbrev: "Sep", name: "September"},
+			{abbrev: "Oct", name: "October"},
+			{abbrev: "Nov", name: "November"},
+			{abbrev: "Dec", name: "December"}
+		];
+		res.render('create/edit', { 
+			user: req.user, 
+			contest: rows[0],
+			errors: [],
+			month: month,
+			months: months,
+			day: day,
+			hour: hour,
+			minute: minute
+		});
+	});
 });
 
 router.get('/create/new', function(req, res, next) {
@@ -217,7 +240,11 @@ router.post('/create/new', function(req, res, next) {
 			'"' + validationObj.competition + '") ';
 		connection.query(sql, function(err, rows, fields) {
 			var contestId = rows.insertId;
-			// just move the file to the right place eventually
+			//move the file to the right place 
+			fs.rename('uploads/' + validationObj.banner, 'public/banners/' + validationObj.banner, function(err) {
+				console.log('renamed!');
+			});
+
 			var sql = "SELECT * FROM tags";
 			connection.query(sql, function(err, rows, fields) {
 				console.log(rows);

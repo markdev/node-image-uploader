@@ -1,15 +1,164 @@
 extends ./createLayout.jade
 
 block title
-	title My Contests
+	title Edit #{contest.title}
 
 block content
-	h1 Edit Contest
-	ul
-		li
-			a(href="/create") My Contests
-		li
-			a(href="/create/new") New Contest
-		li
-			a(href="/create/police") Police Contest
-	
+	div.mainBody
+		a.backLink(href="/create") <- Back To My Contests
+		hr
+		h1 #{contest.title}
+		ul#errorList
+			for error, i in errors
+				li.error #{error}
+		form(action="/create/new", method="post", enctype="multipart/form-data")
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Title:
+				div.formInput
+					input(type="text" name="title" id="title" value="#{contest.title}")
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Tags:
+				div.formInput
+					input(type="text" name="tags" id="tags")
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Banner:
+				div.formInput
+					input(type="file" name="chooseFile" value="Choose An Image")
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Rules:
+				div.formInput
+					input(type="textarea" name="rules" id="rules")
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Deadline:
+				div.formInput
+					label Month
+					select(name="month")
+						for i in months
+							option(value="#{i}") #{months}[i].name			
+					label Day
+					select(name="day")
+						option(value="1") 1
+						option(value="2") 2
+						option(value="3") 3
+						option(value="4") 4
+						option(value="5") 5
+						option(value="6") 6
+						option(value="7") 7
+						option(value="8") 8
+						option(value="9") 9
+						option(value="10") 10
+						option(value="11") 11
+						option(value="12") 12
+						option(value="13") 13
+						option(value="14") 14
+						option(value="15") 15
+						option(value="16") 16
+						option(value="17") 17
+						option(value="18") 18
+						option(value="19") 19
+						option(value="20") 20
+						option(value="21") 21
+						option(value="22") 22
+						option(value="23") 23
+						option(value="24") 24
+						option(value="25") 25
+						option(value="26") 26
+						option(value="27") 27
+						option(value="28") 28
+						option(value="29") 29
+						option(value="30") 30
+						option(value="31") 31
+					label Hour
+					select(name="hour")
+						option(value="1") 1
+						option(value="2") 2
+						option(value="3") 3
+						option(value="4") 4
+						option(value="5") 5
+						option(value="6") 6
+						option(value="7") 7
+						option(value="8") 8
+						option(value="9") 9
+						option(value="10") 10
+						option(value="11") 11
+						option(value="12") 12
+						option(value="13") 13
+						option(value="14") 14
+						option(value="15") 15
+						option(value="16") 16
+						option(value="17") 17
+						option(value="18") 18
+						option(value="19") 19
+						option(value="20") 20
+						option(value="21") 21
+						option(value="22") 22
+						option(value="23") 23
+					label Minute
+					select(name="minute")
+						option(value="0") 0
+						option(value="5") 5
+						option(value="10") 10
+						option(value="15") 15
+						option(value="20") 20
+						option(value="25") 25
+						option(value="30") 30
+						option(value="35") 35
+						option(value="40") 40
+						option(value="45") 45
+						option(value="50") 50
+						option(value="55") 55
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Judging:
+				div.formInput
+					input(type="radio" name="judging" value="public" checked="true")
+					label Public
+					br
+					input(type="radio" name="judging" value="invite")
+					label Invite-Only
+				div.clear
+			br
+
+			div.formRow
+				div.helpBox
+				div.formLabel
+					label Competition:
+				div.formInput
+					input(type="radio" name="competition" value="public" checked="true")
+					label Public
+					br
+					input(type="radio" name="competition" value="invite")
+					label Invite-Only
+				div.clear
+			
+			div.clear
+
+			div.formRow
+				div.submitBlock
+					input(type="submit" value="Create New Contest")
