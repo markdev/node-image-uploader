@@ -188,6 +188,15 @@ body#main div#body div.mainBody {
     margin: 10 auto;
     text-align: center;
     font-weight: bold; }
+  body#main div#body div.mainBody div#searchBar {
+    margin: 0 auto;
+    text-align: center; }
+    body#main div#body div.mainBody div#searchBar label {
+      font-size: 1.5em; }
+    body#main div#body div.mainBody div#searchBar input#search {
+      background-color: #FF0;
+      font-size: 1.5em;
+      width: 300px; }
 body#main div#bottom {
   position: fixed;
   padding-top: 20px;

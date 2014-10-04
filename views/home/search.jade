@@ -4,8 +4,8 @@ block title
 	title Search Contests
 
 block content
-	h1 Search Contests
-	ul
-		li
-			a(href="/home/search") Search Contests
-	
+	div.mainBody
+		div#searchBar
+			label Search by tag: &nbsp;
+			input(type="text" name="search" id="search")
+			input(type="submit" id="submit")

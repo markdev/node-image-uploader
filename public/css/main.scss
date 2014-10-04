@@ -234,6 +234,18 @@ body#main {
 				text-align: center;
 				font-weight: bold;
 			}
+			div#searchBar {
+				margin: 0 auto;
+				text-align: center;
+				label {
+					font-size: 1.5em;
+				}
+				input#search {
+					background-color: #FF0;
+					font-size: 1.5em;
+					width: 300px;
+				}
+			}
 		}
 	}
 	div#bottom {
