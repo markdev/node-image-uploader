@@ -54,9 +54,17 @@ block content
 					label Deadline:
 				div.formInput
 					label Month
-					select(name="month")
+					select(name="months")
 						for i in months
-							option(value="#{i}") #{months}[i].name			
+							if (i.selected)
+								option(value="#{i.num}" selected) #{i.name}	
+							else
+								option(value="#{i.num}") #{i.name}	
+					label Weekday
+					select(name="weekday")
+						option(value="Mon") Monday	
+						option(value="Tue" selected) Tuesday	
+						option(value="Wed") Wednesday	
 					label Day
 					select(name="day")
 						option(value="1") 1

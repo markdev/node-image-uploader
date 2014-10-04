@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/create/new');
+	res.redirect('/create/edit/1');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -166,19 +166,25 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 		console.log("hour: " + hour);
 		console.log("minute: " + minute);
 		var months = [
-			{abbrev: "Jan", name: "January"},
-			{abbrev: "Feb", name: "February"},
-			{abbrev: "Mar", name: "March"},
-			{abbrev: "Apr", name: "April"},
-			{abbrev: "May", name: "May"},
-			{abbrev: "Jun", name: "June"},
-			{abbrev: "Jul", name: "July"},
-			{abbrev: "Aug", name: "August"},
-			{abbrev: "Sep", name: "September"},
-			{abbrev: "Oct", name: "October"},
-			{abbrev: "Nov", name: "November"},
-			{abbrev: "Dec", name: "December"}
+			{num: 1, abbrev: "Jan", name: "January", selected : false},
+			{num: 2, abbrev: "Feb", name: "February", selected : false},
+			{num: 3, abbrev: "Mar", name: "March", selected : false},
+			{num: 4, abbrev: "Apr", name: "April", selected : false},
+			{num: 5, abbrev: "May", name: "May", selected : false},
+			{num: 6, abbrev: "Jun", name: "June", selected : false},
+			{num: 7, abbrev: "Jul", name: "July", selected : false},
+			{num: 8, abbrev: "Aug", name: "August", selected : false},
+			{num: 9, abbrev: "Sep", name: "September", selected : false},
+			{num: 10, abbrev: "Oct", name: "October", selected : false},
+			{num: 11, abbrev: "Nov", name: "November", selected : false},
+			{num: 12, abbrev: "Dec", name: "December", selected : false}
 		];
+		for (var i in months) {
+			if (months[i].num == month) {
+				months[i].selected = true;
+				console.log(months[i]);
+			}
+		}
 		res.render('create/edit', { 
 			user: req.user, 
 			contest: rows[0],
