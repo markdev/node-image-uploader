@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/create/new');
+	res.redirect('/create/edit/1');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -151,6 +151,29 @@ router.get('/create', function(req, res, next) {
 });
 
 router.post('/create/edit', function(req, res, next) {
+	var createTagAssociation = function (tId, cId) {
+		var sql = 'INSERT INTO tagAssociations (tId, cId) VALUES (' + tId + ', ' + cId + ')';
+		connection.query(sql, function (err, rows, fields) {
+			return;
+		});
+	};
+
+	var processTag = function (rawTag, contestId) {
+		var tag = String(rawTag).trim();
+		var sql = 'SELECT * FROM tags WHERE content="' + tag + '"';
+		connection.query(sql, function(err, rows, fields) {
+			if (rows.length > 0) { //if the tag already exists
+				var tId = rows[0].id;
+				createTagAssociation(tId, contestId);
+			} else {
+				var sql = 'INSERT INTO tags (content) VALUES ("' + tag + '")';
+				connection.query(sql, function (err, rows, fields) {
+					createTagAssociation(rows.insertId, contestId);
+				});
+			}
+		});		
+	};
+
 	var contestId = req.body.contestId;
 	var dateTime = '2014-' 
 		+ req.body.month + '-' 
@@ -176,9 +199,17 @@ router.post('/create/edit', function(req, res, next) {
 			});
 		}
 		console.log(errors);
-
 	});
-	// tags should change here, but I am too lazy for that
+	// tags
+	var tagArray = req.body.tags.split(",");
+	// first remove all associations with the contest in the database
+	var sql = 'DELETE FROM tagAssociations WHERE cId=' + contestId;
+	connection.query(sql, function(err, rows, fields) {
+		for (var i in tagArray) {
+			processTag(tagArray[i], contestId);
+		}		
+	});
+	res.redirect('/create');
 	// oh and messages will get sent. bleh
 });
 
@@ -197,10 +228,6 @@ router.get('/create/edit/:contestId?', function(req, res, next) {
 		var judging = rows[0].judging;
 		var competition = rows[0].competition;
 		var banner = rows[0].banner;
-		console.log("month: " + month);
-		console.log("day: " + day);
-		console.log("hour: " + hour);
-		console.log("minute: " + minute);
 		var months = [
 			{num: 1, abbrev: "Jan", name: "January", selected : false},
 			{num: 2, abbrev: "Feb", name: "February", selected : false},
@@ -233,6 +260,7 @@ router.get('/create/edit/:contestId?', function(req, res, next) {
 			for (var i in rows) tagArray[tagArray.length] = rows[i].content;
 			var tagString = tagArray.join(", ");
 		console.log(banner);
+			
 			res.render('create/edit', { 
 				user: req.user, 
 				contestId: contestId,
