@@ -7,19 +7,31 @@ block content
 	div.mainBody
 		a.backLink(href="/create") <- Back To My Contests
 		hr
-		h1 #{title}
+		table.editContest
+			tr
+				td
+					h1 Edit #{title}
+				td
+					img(src="/banners/#{banner}")
+		table.editContest
+			tr
+				td
+					p Judging: #{judging}
+				td
+					p Competition: #{competition}
+			tr
+				td
+					p Judges: (no of judges)
+				td
+					p Competition: (no of judges)
+
 		ul#errorList
 			for error, i in errors
 				li.error #{error}
-		form(action="/create/new", method="post", enctype="multipart/form-data")
-			div.formRow
-				div.helpBox
-				div.formLabel
-					label Title:
-				div.formInput
-					input(type="text" name="title" id="title" value="#{title}")
-				div.clear
-			br
+
+		p#rules Rules: #{rules}
+
+		form(action="/create/edit", method="post")
 
 			div.formRow
 				div.helpBox
@@ -31,25 +43,12 @@ block content
 			br
 
 			div.formRow
-				img(src="/banners/#{banner}")
-			br
-
-			div.formRow
-				div.helpBox
-				div.formLabel
-					label Rules:
-				div.formInput
-					input(type="textarea" name="rules" id="rules" value="#{rules}")
-				div.clear
-			br
-
-			div.formRow
 				div.helpBox
 				div.formLabel
 					label Deadline:
 				div.formInput
 					label Month
-					select(name="months")
+					select(name="month")
 						for i in months
 							if (i.selected)
 								option(value="#{i.num}" selected) #{i.name}	
@@ -83,41 +82,11 @@ block content
 			div.formRow
 				div.helpBox
 				div.formLabel
-					label Judging:
+					label Message Participants:
 				div.formInput
-					if (judging == "public")
-						input(type="radio" name="judging" value="public" checked)
-						label Public
-						br
-						input(type="radio" name="judging" value="invite")
-						label Invite-Only
-					else
-						input(type="radio" name="judging" value="public")
-						label Public
-						br
-						input(type="radio" name="judging" value="invite" checked)
-						label Invite-Only
-				div.clear
-			br
+					input(type="textarea" name="message" id="message")
 
-			div.formRow
-				div.helpBox
-				div.formLabel
-					label Competition:
-				div.formInput
-					if (competition == "public")
-						input(type="radio" name="competition" value="public" checked)
-						label Public
-						br
-						input(type="radio" name="competition" value="invite")
-						label Invite-Only
-					else
-						input(type="radio" name="competition" value="public")
-						label Public
-						br
-						input(type="radio" name="competition" value="invite" checked)
-						label Invite-Only
-				div.clear
+			input(type="hidden" name="contestId" value="#{contestId}")
 			
 			div.clear
 

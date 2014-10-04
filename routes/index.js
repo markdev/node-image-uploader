@@ -150,8 +150,40 @@ router.get('/create', function(req, res, next) {
 	});
 });
 
-router.get('/create/edit/:contestid?', function(req, res, next) {
-	var contestId = req.params.contestid;
+router.post('/create/edit', function(req, res, next) {
+	var contestId = req.body.contestId;
+	var dateTime = '2014-' 
+		+ req.body.month + '-' 
+		+ req.body.day + ' ' 
+		+ req.body.hour + ':' 
+		+ req.body.minute + ':00';
+	var sql = "SELECT * FROM contests WHERE id=" + req.body.contestId;
+	connection.query(sql, function(err, rows, fields) {
+		var dateTimeArray = String(rows[0].deadline).split(' ');
+		console.log(dateTimeArray);
+		var errors = 0;
+		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		if (months[req.body.month - 1] != dateTimeArray[1]) errors++;
+		if (parseInt(req.body.day) != parseInt(dateTimeArray[2])) errors++;
+		if (req.body.hour != dateTimeArray[4].split(':')[0]) errors++;
+		if (req.body.minute != dateTimeArray[4].split(':')[1]) errors++;
+		if (errors) {
+			//update datetime
+			var sql = 'UPDATE contests SET deadline="' + dateTime + '" WHERE id="' + req.body.contestId +'"';
+			connection.query(sql, function (err1, rows1, fields1) {
+				// good enough I guess
+				res.redirect('/create');
+			});
+		}
+		console.log(errors);
+
+	});
+	// tags should change here, but I am too lazy for that
+	// oh and messages will get sent. bleh
+});
+
+router.get('/create/edit/:contestId?', function(req, res, next) {
+	var contestId = req.params.contestId;
 	var sql = 'SELECT * FROM contests WHERE id="' + contestId + '" LIMIT 1';
 	connection.query(sql, function (err, rows, fields) {
 		var title = rows[0].title;
@@ -203,6 +235,7 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 		console.log(banner);
 			res.render('create/edit', { 
 				user: req.user, 
+				contestId: contestId,
 				contest: rows[0],
 				errors: [],
 				title: title,
