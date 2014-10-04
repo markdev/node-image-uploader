@@ -184,6 +184,38 @@ body#main {
 					margin: 20px;
 				}
 			}
+			table#contests {
+				margin: auto;
+				tr {
+					width: 100%;
+				}
+				tr.even {
+					background-color: #FFD874;
+				}
+				tr.odd {
+					background-color: #FFF;
+				}
+				td.thumbnail {
+					img.thumbnail {
+						height: 50px;
+						width: 50px;
+					}
+					width: 70px;
+					padding: 10px;
+				}
+				td.title {
+					width: 500px;
+				}
+				td.entries {
+					width: 100px;
+				}
+				td.judges {
+					width: 100px;
+				}
+				td.deadline {
+					width: 200px;
+				}
+			}
 		}
 	}
 	div#bottom {

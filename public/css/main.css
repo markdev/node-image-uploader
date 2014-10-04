@@ -154,6 +154,28 @@ body#main div#body div.mainBody {
       width: 100%;
       text-align: center;
       margin: 20px; }
+  body#main div#body div.mainBody table#contests {
+    margin: auto; }
+    body#main div#body div.mainBody table#contests tr {
+      width: 100%; }
+    body#main div#body div.mainBody table#contests tr.even {
+      background-color: #FFD874; }
+    body#main div#body div.mainBody table#contests tr.odd {
+      background-color: #FFF; }
+    body#main div#body div.mainBody table#contests td.thumbnail {
+      width: 70px;
+      padding: 10px; }
+      body#main div#body div.mainBody table#contests td.thumbnail img.thumbnail {
+        height: 50px;
+        width: 50px; }
+    body#main div#body div.mainBody table#contests td.title {
+      width: 500px; }
+    body#main div#body div.mainBody table#contests td.entries {
+      width: 100px; }
+    body#main div#body div.mainBody table#contests td.judges {
+      width: 100px; }
+    body#main div#body div.mainBody table#contests td.deadline {
+      width: 200px; }
 body#main div#bottom {
   position: fixed;
   padding-top: 20px;

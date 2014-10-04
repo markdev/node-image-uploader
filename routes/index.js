@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/create/new');
+	res.redirect('/create');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -141,6 +141,15 @@ router.post('/signup', function(req, res, next) {
 *	Create
 */
 router.get('/create', function(req, res, next) {
+	var sql = 'SELECT * FROM contests WHERE uId="' + req.user.id + '"';
+	connection.query(sql, function (err, rows, fields) {
+		res.render('create/index', {
+			user: req.user,
+			contests: rows
+		});
+	});
+
+	/*
 	console.log(util.inspect(req.user));
 	var getContestsByUserId = function(id) {
 		var sql = 'SELECT * FROM contests WHERE uId="' + id + '"';
@@ -153,7 +162,7 @@ router.get('/create', function(req, res, next) {
 	res.render('create/index', { 
 		user: req.user, 
 		contests: contests
-	});
+	}); */
 });
 
 router.get('/create/edit', function(req, res, next) {

@@ -8,12 +8,18 @@ block content
 		a.backLink(href="/create/new") + Create a New Contest
 		hr
 		h1 My Contests
-		p #{contests}
-		ul
-			li
-				a(href="/create/edit") Edit Contests
-			li
-				a(href="/create/new") New Contest
-			li
-				a(href="/create/police") Police Contest
+		table#contests
+			each contest, i in contests
+				tr(class=(i % 2 == 0) ? 'odd' : 'even')
+					td.thumbnail
+						img.thumbnail(src="/assets/#{contest.banner}")
+					td.title
+						a(href="/create/edit/#{contest.id}")
+							p #{contest.title}
+					td.entries
+						p entries here
+					td.judges
+						p judges here
+					td.deadline
+						p #{contest.deadline}
 	
