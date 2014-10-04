@@ -154,8 +154,8 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 	var contestId = req.params.contestid;
 	var sql = 'SELECT * FROM contests WHERE id="' + contestId + '" LIMIT 1';
 	connection.query(sql, function (err, rows, fields) {
+		var title = rows[0].title;
 		var deadlineArray = String(rows[0].deadline).split(" ");
-		console.log(deadlineArray);
 		var monthBackMap = { "Jan" : 1, "Feb" : 2, "Mar" : 3, "Apr" : 4, "May" : 5, "Jun" : 6, "Jul" : 7, "Aug" : 8, "Sep" : 9, "Oct" : 10, "Nov" : 11, "Dec" : 12 }
 		var month = monthBackMap[deadlineArray[1]];
 		var day = deadlineArray[2];
@@ -164,6 +164,7 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 		var rules = rows[0].rules;
 		var judging = rows[0].judging;
 		var competition = rows[0].competition;
+		var banner = rows[0].banner;
 		console.log("month: " + month);
 		console.log("day: " + day);
 		console.log("hour: " + hour);
@@ -196,17 +197,18 @@ router.get('/create/edit/:contestid?', function(req, res, next) {
 		// and now, the tags
 		var sql = "SELECT content FROM tags JOIN tagAssociations ON tags.id = tagAssociations.tId WHERE tagAssociations.cId = " + contestId;
 		connection.query(sql, function(err, rows, fields) {
-console.log(judging);
-console.log(competition);
 			var tagArray = [];
 			for (var i in rows) tagArray[tagArray.length] = rows[i].content;
 			var tagString = tagArray.join(", ");
+		console.log(banner);
 			res.render('create/edit', { 
 				user: req.user, 
 				contest: rows[0],
 				errors: [],
+				title: title,
 				tags: tagString,
 				rules: rules,
+				banner: banner,
 				month: month,
 				months: months,
 				day: day,

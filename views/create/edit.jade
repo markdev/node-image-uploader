@@ -7,7 +7,7 @@ block content
 	div.mainBody
 		a.backLink(href="/create") <- Back To My Contests
 		hr
-		h1 #{contest.title}
+		h1 #{title}
 		ul#errorList
 			for error, i in errors
 				li.error #{error}
@@ -17,7 +17,7 @@ block content
 				div.formLabel
 					label Title:
 				div.formInput
-					input(type="text" name="title" id="title" value="#{contest.title}")
+					input(type="text" name="title" id="title" value="#{title}")
 				div.clear
 			br
 
@@ -31,12 +31,7 @@ block content
 			br
 
 			div.formRow
-				div.helpBox
-				div.formLabel
-					label Banner:
-				div.formInput
-					input(type="file" name="chooseFile" value="Choose An Image")
-				div.clear
+				img(src="/banners/#{banner}")
 			br
 
 			div.formRow
