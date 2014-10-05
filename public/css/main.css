@@ -48,6 +48,8 @@ body#signUp {
     body#signUp div#bottom a {
       margin: auto; }
 
+body#main div#judgingWrapper {
+  text-align: center; }
 body#main div.bottomButton {
   width: 14%;
   height: 80%;

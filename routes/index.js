@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/judge');
+	res.redirect('/judge/contest/1');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -488,9 +488,21 @@ router.get('/judge', function(req, res, next) {
 });
 
 router.get('/judge/contest/:cId?', function(req, res, next) {
-	res.render('judge/contest', { 
-		user: req.user
-	});
+	//1: validate.  If you ain't a judge, you get bounced.
+	//2: get all entries
+	//3: render them
+	// do the dynamic judging later
+	var sql = 'SELECT * FROM userRelations where uId="' + req.user.id + '" AND cId="' + req.params.cId + '" LIMIT 1';
+	connection.query(sql, function (err, rows, fields) {
+		if (rows.length == 0 || rows[0].relationship != 'judge') {
+			res.redirect("/judge");
+		} else {
+			res.render('judge/contest', { 
+				user: req.user,
+				foo: "Thi sis foo"
+			});
+		}
+	});	
 });
 
 router.get('/judge/report', function(req, res, next) {
