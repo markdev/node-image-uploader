@@ -99,20 +99,31 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.get('/contest/:cId?', function(req, res, next) {
-	var sql = 'SELECT * FROM contests WHERE id="' + req.params.cId + '" LIMIT 1';
+	// first we check for eligibility
+	var sql = 'SELECT * FROM userRelations WHERE uId="' + req.user.id + '" AND cId="' + req.params.cId + '"';
 	connection.query(sql, function(err, rows, fields) {
-		res.render('home/contest', {
-			user: req.user,
-			contest: rows[0],
-			errors: [],
-			entries: 34,
-			judges: 120
-		});
+		console.log(rows);
+		if (rows.length == 0) { // full eligibility
+			var sql = 'SELECT * FROM contests WHERE id="' + req.params.cId + '" LIMIT 1';
+			connection.query(sql, function(err, rows, fields) {
+				res.render('home/contest', {
+					user: req.user,
+					contest: rows[0],
+					errors: [],
+					entries: 34,
+					judges: 120
+				});
+			});
+		} else {
+			var relationship = rows[0].relationship;
+			if (relationship == 'judge') res.redirect('/judge');
+			if (relationship == 'competitor') res.redirect('/competitor');
+			if (relationship == 'creator') res.redirect('/creator');
+		}
 	});
 });
 
 router.post('/contest/', function (req, res, next) {
-
 	var processSignUp = function(relationship, url) {
 		var sql = 'SELECT * FROM userRelations WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '"';
 		connection.query(sql, function(err, rows, fields) {
@@ -126,57 +137,19 @@ router.post('/contest/', function (req, res, next) {
 			}
 		});		
 	};
-
-	var signUpForJudging = function () {
+	if (req.body.submit == "Judge") { 
 		processSignUp('judge', '/judge');
-	};
-	var signUpForCompeting = function () {
-		processSignUp('compete', '/compete');
-	};
-	var signUpDefault = function() {
-		// nothing here I suppose
-	};
-	switch (req.body.submit) {
-		case "Judge":
-			signUpForJudging();
-			break;
-		case "Compete":
-			signUpForCompeting();
-			break;
-		default:
-			signUpDefault();
-			break;
+	} else if (req.body.submit == "Compete") {
+		processSignUp('competitor', '/compete');
+	} else {
+		console.log("some sorta error");
 	}
 });
 
 router.get('/search', function(req, res, next) {
 	res.render('home/search', {
 		user: req.user,
-		contests: [ 
-		/*
-			{ 	id: 1,
-    			uId: 1,
-			    title: 'My cat pics',
-			    banner: '498aee0a2aa0035c598c537380719177.jpg',
-			    rules: 'Must be a cat.  Must be cute.',
-			    deadline: 'Wed May 07 2014 10:35:00 GMT+0000 (UTC)',
-			    judging: 'public',
-			    competition: 'public',
-			    tId: 4,
-			    cId: 1 
-			},
-			{	id: 2,
-			    uId: 1,
-			    title: 'Mo cat pics',
-			    banner: '498ee22c1e64c94770acd07cf6dff527.jpg',
-			    rules: 'Must be a cat.  Must be cute.',
-			    deadline: 'Wed Jan 01 2014 01:00:00 GMT+0000 (UTC)',
-			    judging: 'public',
-			    competition: 'public',
-			    tId: 4,
-			    cId: 2
-			} */
-		] 
+		contests: [] 
 	});
 });
 

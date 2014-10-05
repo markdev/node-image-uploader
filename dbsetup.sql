@@ -81,3 +81,4 @@ CREATE TABLE userRelations (
 
 INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ('mark.karavan@gmail.com', 'ea82410c7a9991816b5eeeebe195e20a', '', 'male', '1983-04-07 18:34:00', NOW());
 INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ('david@hadden.com', '1610838743cc90e3e4fdda748282d9b8', '', 'male', '1964-04-07 18:34:00', NOW());
+INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ('chris@acciavatti.com', '6b34fe24ac2ff8103f6fce1f0da2ef57', '', 'male', '1983-07-07 15:23:00', NOW());
