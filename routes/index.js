@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('compete/submit/1');
+	res.redirect('/compete/submit/1');
 });
 
 router.get('/logout', function(req, res, next) {
