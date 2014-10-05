@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/contest/2');
+	res.redirect('compete/submit/1');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -520,8 +520,24 @@ router.get('/compete/playByPlay', function(req, res, next) {
 });
 
 router.get('/compete/submit/:cId?', function(req, res, next) {
-	res.render('compete/submit', { 
-		user: req.user, 
+	// first, is he even in this thing?
+	var sql = 'SELECT * FROM userRelations WHERE uId="' + req.user.id + '" AND cId="' + req.params.cId + '" AND relationship="competitor"';
+	connection.query(sql, function(err, rows, fields) {
+		if (rows.length == 0) { // if he is not registered
+			res.redirect('/compete');
+		} else {
+			// second, has he submitted an entry yet?
+			var sql = 'SELECT * FROM entries WHERE uId="' + req.user.id + '" AND cId="' + req.params.cId + '"'; 
+			connection.query(sql, function(err, rows, fields) {
+				if (rows.length > 0) { // if he has already submitted an entry
+					res.redirect('/compete/playByPlay');
+				} else {
+					res.render('compete/submit', { 
+						user: req.user, 
+					});
+				}
+			});		
+		}
 	});
 });
 
