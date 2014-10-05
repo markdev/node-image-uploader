@@ -70,10 +70,10 @@ router.use(function(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-		res.render('home/index', { 
-			title: 'Express',
-			user: req.user 
-		});
+	res.render('home/index', { 
+		title: 'Express',
+		user: req.user 
+	});
 });
 
 router.get('/login', function(req, res, next) {
@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/search');
+	res.redirect('/contest/1');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -96,6 +96,41 @@ router.get('/signup', function(req, res, next) {
 		user: req.user,
 		errors: [] 
 	});
+});
+
+router.get('/contest/:cId?', function(req, res, next) {
+	var sql = 'SELECT * FROM contests WHERE id="' + req.params.cId + '" LIMIT 1';
+	connection.query(sql, function(err, rows, fields) {
+		res.render('home/contest', {
+			user: req.user,
+			contest: rows[0],
+			entries: 34,
+			judges: 120
+		});
+	});
+});
+
+router.post('/contest/', function (req, res, next) {
+	var signUpForJudging = function () {
+		console.log("You be judging");
+	};
+	var signUpForCompeting = function () {
+		console.log("You be competing");
+	};
+	var signUpDefault = function() {
+		console.log("You have defaulted");
+	};
+	switch (req.body.submit) {
+		case "Judge":
+			signUpForJudging();
+			break;
+		case "Compete":
+			signUpForCompeting();
+			break;
+		default:
+			signUpDefault();
+			break;
+	}
 });
 
 router.get('/search', function(req, res, next) {

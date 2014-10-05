@@ -1,0 +1,29 @@
+extends ./homeLayout.jade
+
+block title
+	title Contest Detail
+
+block content
+	div.mainBody
+		a.backLink(href="/search") <- Back To Search
+		hr
+		div#detailHeader
+			img(src="/banners/#{contest.banner}")
+			br
+			br
+			h1 #{contest.title} details
+		hr
+		div#detailBody
+			h1 #{entries} Entries/ #{judges} Judges
+			h4 Judging: #{contest.judging}  
+			h4 Competition: #{contest.competition}  
+			h4 Deadline: #{contest.deadline}
+			br
+			h3 Rules: #{contest.rules}
+			div#optionsWrapper
+				form(action="/contest", method="post")
+					div.option
+						input(type="submit" name="submit" id="judge" value="Judge")
+					div.option
+						input(type="submit" name="submit" id="compete" value="Compete")
+
