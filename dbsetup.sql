@@ -30,7 +30,7 @@ CREATE TABLE entries (
 	id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	uId int,
 	cId int,
-	picture varchar(12),
+	picture varchar(40),
 	uploadTime datetime,
 	FOREIGN KEY (uId) REFERENCES users(id),
 	FOREIGN KEY (cId) REFERENCES contests(id)

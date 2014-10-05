@@ -216,6 +216,7 @@ router.get('/create', function(req, res, next) {
 	});
 });
 
+
 router.post('/create/edit', function(req, res, next) {
 	var createTagAssociation = function (tId, cId) {
 		var sql = 'INSERT INTO tagAssociations (tId, cId) VALUES (' + tId + ', ' + cId + ')';
@@ -453,6 +454,27 @@ router.post('/create/new', function(req, res, next) {
 	}
 });
 
+
+router.post('/compete/submit', function(req, res, next) {
+	var errors = []; // I'll have to figure out the right way to do errors later
+	if (req.files.chooseFile == undefined) {
+		console.log("HELLO");
+		errors[errors.length] = "Please upload a file";
+		res.redirect('/compete/submit/' + req.body.cId);
+	} else {
+		// create the database entry
+		console.log(req.files.chooseFile);
+		var sql = 'INSERT INTO entries (uId, cId, picture, uploadTime) VALUES ("' + req.user.id + '", "' + req.body.cId + '", "' + req.files.chooseFile.name + '", NOW())';
+		connection.query(sql, function(err, rows, fields) { // now move the file		
+			fs.rename('uploads/' + req.files.chooseFile.name, 'public/entries/' + req.files.chooseFile.name, function(err) {
+				console.log(req.files.chooseFile.name + " has been renamed!");
+				res.redirect('/compete');
+			});
+		});
+	}
+});
+
+
 router.get('/create/police', function(req, res, next) {
 	res.render('create/police', { user: req.user });
 });
@@ -537,7 +559,8 @@ router.get('/compete/submit/:cId?', function(req, res, next) {
 					connection.query(sql, function(err, rows, fields) {
 						res.render('compete/submit', { 
 							user: req.user,
-							contest: rows[0] 
+							contest: rows[0],
+							errors: [] 
 						});
 					});
 				}
@@ -545,6 +568,22 @@ router.get('/compete/submit/:cId?', function(req, res, next) {
 		}
 	});
 });
+
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
 
 
 

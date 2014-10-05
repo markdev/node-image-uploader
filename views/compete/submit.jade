@@ -8,13 +8,13 @@ block content
 		a.backLink(href="/create") <- Back To Competitions I'm In
 		hr
 		h1 Submit Entry to #{contest.title}
+		ul#errorList
+			for error, i in errors
+				li.error #{error}
 		p.ruleDescription Rules: #{contest.rules}
-		form(action="compete/submit", method="post", enctype="multipart/form-data")
+		form(action="/compete/submit", method="post", enctype="multipart/form-data")
 			div#submissionBox
 				input(type="file" name="chooseFile" value="Choose An Image")
-				br
-				input(type="checkbox" name="terms" value="agree")
-				label I agree to the terms and conditions
 				br
 				input(type="hidden" name="cId" value="#{contest.id}")
 				input(type="submit" name="submit" value="Submit")
