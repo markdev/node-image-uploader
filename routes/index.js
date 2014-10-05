@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/compete/submit/1');
+	res.redirect('/judge');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -478,6 +478,7 @@ router.get('/messages/message', function(req, res, next) {
 */
 router.get('/judge', function(req, res, next) {
 	var sql = 'SELECT * FROM contests JOIN userRelations ON contests.id = userRelations.cId WHERE userRelations.uId=' + req.user.id + ' AND userRelations.relationship="judge"';
+	console.log(sql);
 	connection.query(sql, function (err, rows, fields) {
 		res.render('judge/index', {
 			user: req.user,
