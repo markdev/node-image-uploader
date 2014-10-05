@@ -70,6 +70,14 @@ CREATE TABLE tagAssociations (
 	FOREIGN KEY (cId) REFERENCES contests(id)
 );
 
+CREATE TABLE userRelations (
+	uId int,
+	cId int,
+	relationship enum('creator', 'judge', 'competitor'),
+	FOREIGN KEY (uId) REFERENCES users(id),
+	FOREIGN KEY (cId) REFERENCES contests(id)
+);
+
 
 INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ('mark.karavan@gmail.com', 'ea82410c7a9991816b5eeeebe195e20a', '', 'male', '1983-04-07 18:34:00', NOW());
 INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ('david@hadden.com', '1610838743cc90e3e4fdda748282d9b8', '', 'male', '1964-04-07 18:34:00', NOW());

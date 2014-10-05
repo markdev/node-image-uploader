@@ -13,6 +13,9 @@ block content
 			br
 			h1 #{contest.title} details
 		hr
+		ul#errorList
+			for error, i in errors
+				li.error #{error}
 		div#detailBody
 			h1 #{entries} Entries/ #{judges} Judges
 			h4 Judging: #{contest.judging}  
@@ -22,6 +25,7 @@ block content
 			h3 Rules: #{contest.rules}
 			div#optionsWrapper
 				form(action="/contest", method="post")
+					input(type="hidden" name="cId" value="#{contest.id}")
 					div.option
 						input(type="submit" name="submit" id="judge" value="Judge")
 					div.option

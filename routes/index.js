@@ -104,6 +104,7 @@ router.get('/contest/:cId?', function(req, res, next) {
 		res.render('home/contest', {
 			user: req.user,
 			contest: rows[0],
+			errors: [],
 			entries: 34,
 			judges: 120
 		});
@@ -111,14 +112,29 @@ router.get('/contest/:cId?', function(req, res, next) {
 });
 
 router.post('/contest/', function (req, res, next) {
+
+	var processSignUp = function(relationship, url) {
+		var sql = 'SELECT * FROM userRelations WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '"';
+		connection.query(sql, function(err, rows, fields) {
+			if (rows.length == 0) {
+				var sql = 'INSERT INTO userRelations (uId, cId, relationship) VALUES (' + req.user.id + ', ' + req.body.cId + ', "' + relationship + '")';
+				connection.query(sql, function(err, rows, fields) {
+					res.redirect(url);
+				});
+			} else {
+				res.redirect('/contest/' + req.body.cId);
+			}
+		});		
+	};
+
 	var signUpForJudging = function () {
-		console.log("You be judging");
+		processSignUp('judge', '/judge');
 	};
 	var signUpForCompeting = function () {
-		console.log("You be competing");
+		processSignUp('compete', '/compete');
 	};
 	var signUpDefault = function() {
-		console.log("You have defaulted");
+		// nothing here I suppose
 	};
 	switch (req.body.submit) {
 		case "Judge":
@@ -438,11 +454,15 @@ router.post('/create/new', function(req, res, next) {
 			fs.rename('uploads/' + validationObj.banner, 'public/banners/' + validationObj.banner, function(err) {
 				console.log('renamed!');
 			});
+			//create the relationship
+			var sql = 'INSERT INTO userRelations (uId, cId, relationship) VALUES ("' + req.user.id + '", "' + contestId + '", "creator")';
+			connection.query(sql, function(err, rows, fields) {
+				res.redirect('/create');
+			});
 			var tagArray = req.body.tags.split(",");
 			for (var i in tagArray) {
 				processTag(tagArray[i], contestId);
 			}
-			res.redirect('/create');
 		});
 
 	} else {
