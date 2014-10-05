@@ -532,8 +532,13 @@ router.get('/compete/submit/:cId?', function(req, res, next) {
 				if (rows.length > 0) { // if he has already submitted an entry
 					res.redirect('/compete/playByPlay');
 				} else {
-					res.render('compete/submit', { 
-						user: req.user, 
+					// now pull the contest data and give it to him
+					var sql = 'SELECT * FROM contests WHERE id="' + req.params.cId + '"';
+					connection.query(sql, function(err, rows, fields) {
+						res.render('compete/submit', { 
+							user: req.user,
+							contest: rows[0] 
+						});
 					});
 				}
 			});		

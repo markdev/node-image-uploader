@@ -235,6 +235,16 @@ body#main div#body div.mainBody {
             background-color: #0f0; }
           body#main div#body div.mainBody div#detailBody div#optionsWrapper div.option input[type="submit"]#compete, body#main div#body div.mainBody div#detailBody div#optionsWrapper div.option input[type="button"]#compete {
             background-color: #f00; }
+  body#main div#body div.mainBody p.ruleDescription {
+    text-align: center;
+    margin: 50px 0px; }
+  body#main div#body div.mainBody div#submissionBox {
+    margin: 0 auto;
+    width: 350px;
+    height: 200px;
+    text-align: center; }
+    body#main div#body div.mainBody div#submissionBox input {
+      margin: 20px; }
 body#main div#bottom {
   position: fixed;
   padding-top: 20px;

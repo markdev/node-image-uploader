@@ -296,6 +296,19 @@ body#main {
 					}
 				}
 			}
+			p.ruleDescription {
+				text-align: center;
+				margin: 50px 0px;
+			}
+			div#submissionBox {
+				margin: 0 auto;
+				width: 350px;
+				height: 200px;
+				text-align: center;
+				input {
+					margin: 20px;
+				}
+			}
 		}
 	}
 	div#bottom {

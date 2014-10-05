@@ -4,12 +4,18 @@ block title
 	title Submit Entry
 
 block content
-	h1 Submit Entry
-	ul
-		li
-			a(href="/compete") Contests I'm Competing In
-		li
-			a(href="/compete/results") My Results
-		li
-			a(href="/compete/playByPlay") Play By Play
-	
+	div.mainBody
+		a.backLink(href="/create") <- Back To Competitions I'm In
+		hr
+		h1 Submit Entry to #{contest.title}
+		p.ruleDescription Rules: #{contest.rules}
+		form(action="compete/submit", method="post", enctype="multipart/form-data")
+			div#submissionBox
+				input(type="file" name="chooseFile" value="Choose An Image")
+				br
+				input(type="checkbox" name="terms" value="agree")
+				label I agree to the terms and conditions
+				br
+				input(type="hidden" name="cId" value="#{contest.id}")
+				input(type="submit" name="submit" value="Submit")
+				
