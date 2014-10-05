@@ -4,12 +4,19 @@ block title
 	title Contests I'm Competing In
 
 block content
-	h1 Contests I'm Competing In
-	ul
-		li
-			a(href="/compete/results") My Results
-		li
-			a(href="/compete/playByPlay") Play By Play
-		li
-			a(href="/compete/submit") Submit Entry
-	
+	div.mainBody
+		h1 Contests I'm Competing In
+		table#contests
+			each contest, i in contests
+				tr(class=(i % 2 == 0) ? 'odd' : 'even')
+					td.thumbnail
+						img.thumbnail(src="/banners/#{contest.banner}")
+					td.title
+						a(href="/compete/submit/#{contest.id}")
+							p #{contest.title}
+					td.entries
+						p entries here
+					td.judges
+						p judges here
+					td.deadline
+						p #{contest.deadline}

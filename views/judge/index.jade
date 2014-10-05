@@ -4,12 +4,19 @@ block title
 	title Contests I'm Judging
 
 block content
-	h1 Contests I'm Judging
-	ul
-		li
-			a(href="/judge") Contests I'm judging
-		li
-			a(href="/judge/contest") Judge a specific contest
-		li
-			a(href="/judge/report") Report an entry
-	
+	div.mainBody
+		h1 Contests I'm Judging
+		table#contests
+			each contest, i in contests
+				tr(class=(i % 2 == 0) ? 'odd' : 'even')
+					td.thumbnail
+						img.thumbnail(src="/banners/#{contest.banner}")
+					td.title
+						a(href="/judge/contest/#{contest.id}")
+							p #{contest.title}
+					td.entries
+						p entries here
+					td.judges
+						p judges here
+					td.deadline
+						p #{contest.deadline}

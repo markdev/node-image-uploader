@@ -83,7 +83,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
-	res.redirect('/contest/1');
+	res.redirect('/contest/2');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -117,7 +117,7 @@ router.get('/contest/:cId?', function(req, res, next) {
 		} else {
 			var relationship = rows[0].relationship;
 			if (relationship == 'judge') res.redirect('/judge');
-			if (relationship == 'competitor') res.redirect('/competitor');
+			if (relationship == 'competitor') res.redirect('/compete');
 			if (relationship == 'creator') res.redirect('/creator');
 		}
 	});
@@ -476,11 +476,19 @@ router.get('/messages/message', function(req, res, next) {
 *	Judge
 */
 router.get('/judge', function(req, res, next) {
-	res.render('judge/index', { user: req.user });
+	var sql = 'SELECT * FROM contests JOIN userRelations ON contests.id = userRelations.cId WHERE userRelations.uId=' + req.user.id + ' AND userRelations.relationship="judge"';
+	connection.query(sql, function (err, rows, fields) {
+		res.render('judge/index', {
+			user: req.user,
+			contests: rows
+		});
+	});
 });
 
-router.get('/judge/contest', function(req, res, next) {
-	res.render('judge/contest', { user: req.user });
+router.get('/judge/contest/:cId?', function(req, res, next) {
+	res.render('judge/contest', { 
+		user: req.user
+	});
 });
 
 router.get('/judge/report', function(req, res, next) {
@@ -494,7 +502,13 @@ router.get('/judge/report', function(req, res, next) {
 *	Compete
 */
 router.get('/compete', function(req, res, next) {
-	res.render('compete/index', { user: req.user });
+	var sql = 'SELECT * FROM contests JOIN userRelations ON contests.id = userRelations.cId WHERE userRelations.uId=' + req.user.id + ' AND userRelations.relationship="competitor"';
+	connection.query(sql, function (err, rows, fields) {
+		res.render('compete/index', {
+			user: req.user,
+			contests: rows
+		});
+	});
 });
 
 router.get('/compete/results', function(req, res, next) {
@@ -505,8 +519,10 @@ router.get('/compete/playByPlay', function(req, res, next) {
 	res.render('compete/playByPlay', { user: req.user });
 });
 
-router.get('/compete/submit', function(req, res, next) {
-	res.render('compete/submit', { user: req.user });
+router.get('/compete/submit/:cId?', function(req, res, next) {
+	res.render('compete/submit', { 
+		user: req.user, 
+	});
 });
 
 
