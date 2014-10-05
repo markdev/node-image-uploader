@@ -108,3 +108,36 @@ INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ("w@w.co
 INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ("y@y.com", "415290769594460e2e485922904f345d", "", "male", "1983-04-07 18:34:00", NOW());
 INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ("x@x.com", "9dd4e461268c8034f5c8564e155c67a6", "", "male", "1983-04-07 18:34:00", NOW());
 INSERT INTO users (email, password, avatar, sex, dob, createdOn) VALUES ("z@z.com", "fbade9e36a3f36d3d676c1b808451dd7", "", "male", "1983-04-07 18:34:00", NOW());
+
+
+
+INSERT INTO contests (uId, title, banner, rules, deadline, judging, competition) VALUES (1, "Whiteboard Pics", "c557cba6b28660921bc4f66c914ada62.jpg", "Must be an original whiteboard pic", "2014-11-05 12:00:00", "public", "public");
+
+
+
+INSERT INTO userRelations (uId, cId, relationship) VALUES (4, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (5, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (6, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (7, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (8, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (9, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (10, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (11, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (12, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (13, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (14, 1, 'competitor');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (15, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (16, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (17, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (18, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (19, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (20, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (21, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (22, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (23, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (24, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (25, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (26, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (27, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (28, 1, 'judge');
+INSERT INTO userRelations (uId, cId, relationship) VALUES (29, 1, 'judge');
