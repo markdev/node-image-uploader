@@ -1,5 +1,4 @@
 var judge = function() {
-	console.log("new shit");
 	var nVer = navigator.appVersion;
 	var nAgt = navigator.userAgent;
 	var browserName  = navigator.appName;
@@ -32,10 +31,10 @@ var judge = function() {
 						'cId' : cId
 					}
 				}).done(function(data){
-					if (data.length > 0) {
-						// reset all buttons
-					} else {
-						// set button
+					$('div.button').removeClass('active');
+					if (typeof data[0] == "object") {
+						var rating = data[0].rating;
+						$('div#button' + rating).addClass('active');
 					}
 				});
 			}
