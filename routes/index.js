@@ -530,13 +530,13 @@ router.post('/judge/rateEntry', function(req, res, next) {
 			// entry exists; update it
 			var sql = 'UPDATE judges SET rating="' + req.body.rating + '", judgedOn=NOW() WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.eId + '"';
 			connection.query(sql, function (err, rows, fields) {
-				res.send(rows);
+				res.send(req.body.rating);
 			});
 		} else {
 			// no entry; create it
 			var sql = 'INSERT INTO judges (uId, cId, eId, rating, judgedOn) VALUES ("' + req.user.id + '", "' + req.body.cId + '", "' + req.body.eId + '", "' + req.body.rating + '", NOW())';
 			connection.query(sql, function (err, rows, fields) {
-				res.send(rows);
+				res.send(req.body.rating);
 			});
 		}
 	});

@@ -63,8 +63,10 @@ var judge = function() {
 				cId: $('#cId').val(),
 				eId: activeId
 			}
-		}).done(function(data) {
-			console.log(data);
+		}).done(function(rating) {
+			//console.log(data);
+			$('div.button').removeClass('active');
+			$('div#button' + rating).addClass('active');
 		});
 	});
 };
