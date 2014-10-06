@@ -62,37 +62,40 @@ body#main div#judgingWrapper {
         float: left; }
   body#main div#judgingWrapper table#buttons {
     margin: 0 auto; }
-    body#main div#judgingWrapper table#buttons div.button {
-      display: table-cell;
-      border-radius: 10px;
-      width: 80px;
-      height: 65px;
-      margin: 10px;
-      text-align: center;
-      vertical-align: middle; }
-      body#main div#judgingWrapper table#buttons div.button#button1 {
-        background-color: #FFE874; }
-      body#main div#judgingWrapper table#buttons div.button#button2 {
-        background-color: #FFD864; }
-      body#main div#judgingWrapper table#buttons div.button#button3 {
-        background-color: #FFC854; }
-      body#main div#judgingWrapper table#buttons div.button#button4 {
-        background-color: #FFB844; }
-      body#main div#judgingWrapper table#buttons div.button#button5 {
-        background-color: #FFA834; }
-      body#main div#judgingWrapper table#buttons div.button#button6 {
-        background-color: #FF9824; }
-      body#main div#judgingWrapper table#buttons div.button#button7 {
-        background-color: #FF8814; }
-      body#main div#judgingWrapper table#buttons div.button#button8 {
-        background-color: #FF7804; }
-      body#main div#judgingWrapper table#buttons div.button#button9 {
-        background-color: #FF6800; }
-      body#main div#judgingWrapper table#buttons div.button#button10 {
-        background-color: #FF5800; }
-      body#main div#judgingWrapper table#buttons div.button.active {
-        font-weight: bold;
-        font-size: 2em; }
+    body#main div#judgingWrapper table#buttons a.score {
+      width: auto;
+      height: 70px; }
+      body#main div#judgingWrapper table#buttons a.score div.button {
+        display: table-cell;
+        border-radius: 10px;
+        width: 80px;
+        height: 65px;
+        margin: 10px;
+        text-align: center;
+        vertical-align: middle; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button1 {
+          background-color: #FFE874; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button2 {
+          background-color: #FFD864; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button3 {
+          background-color: #FFC854; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button4 {
+          background-color: #FFB844; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button5 {
+          background-color: #FFA834; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button6 {
+          background-color: #FF9824; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button7 {
+          background-color: #FF8814; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button8 {
+          background-color: #FF7804; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button9 {
+          background-color: #FF6800; }
+        body#main div#judgingWrapper table#buttons a.score div.button#button10 {
+          background-color: #FF5800; }
+        body#main div#judgingWrapper table#buttons a.score div.button.active {
+          font-weight: bold;
+          font-size: 2em; }
 body#main div.bottomButton {
   width: 14%;
   height: 80%;

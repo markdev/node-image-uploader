@@ -515,13 +515,31 @@ router.get('/judge/contest/:cId?', function(req, res, next) {
 });
 
 router.post('/judge/ajax', function(req, res, next) {
-	console.log(req.body.activeId);
-	console.log(req.body.cId);
 	var sql = 'SELECT * FROM judges WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.activeId + '"'; 
 	connection.query(sql, function (err, rows, fields) {
 		console.log(rows);
 		res.send(rows);
 	});	
+});
+
+router.post('/judge/rateEntry', function(req, res, next) {
+	//console.log(req.body);
+	var sql = 'SELECT * FROM judges WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.eId + '"';
+	connection.query(sql, function (err, rows, fields) {
+		if (rows.length > 0) {
+			// entry exists; update it
+			var sql = 'UPDATE judges SET rating="' + req.body.rating + '", judgedOn=NOW() WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.eId + '"';
+			connection.query(sql, function (err, rows, fields) {
+				res.send(rows);
+			});
+		} else {
+			// no entry; create it
+			var sql = 'INSERT INTO judges (uId, cId, eId, rating, judgedOn) VALUES ("' + req.user.id + '", "' + req.body.cId + '", "' + req.body.eId + '", "' + req.body.rating + '", NOW())';
+			connection.query(sql, function (err, rows, fields) {
+				res.send(rows);
+			});
+		}
+	});
 });
 
 router.get('/judge/report', function(req, res, next) {

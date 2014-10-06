@@ -5,7 +5,7 @@ var judge = function() {
 	var fullVersion  = ''+parseFloat(navigator.appVersion); 
 	var majorVersion = parseInt(navigator.appVersion,10);
 	var nameOffset,verOffset,ix;
-	var activeId = 0;
+	var activeId = 1;
 
 	// In Chrome, the true version is after "Chrome" 
 	if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
@@ -39,7 +39,6 @@ var judge = function() {
 				});
 			}
 		};
-
 		$('div#carousel tr').children().each(function() {
 			var lPos = $(this).position().left;
 			if (lPos > 250 && !active) {
@@ -50,6 +49,22 @@ var judge = function() {
 				$(this).children("div.imageFrame").css('background-color', '#000');
 			}
 			$('p#position').html(activeId);
+		});
+	});
+
+	$('div.button').click(function(){
+		var rating = $(this).attr('id').substr(6);
+		//console.log(rating);
+		$.ajax({
+			url: '/judge/rateEntry',
+			method: 'post',
+			data: {
+				rating: rating,
+				cId: $('#cId').val(),
+				eId: activeId
+			}
+		}).done(function(data) {
+			console.log(data);
 		});
 	});
 };
