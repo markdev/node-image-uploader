@@ -489,18 +489,27 @@ router.get('/judge', function(req, res, next) {
 
 router.get('/judge/contest/:cId?', function(req, res, next) {
 	//1: validate.  If you ain't a judge, you get bounced.
-	//2: get all entries
-	//3: render them
-	// do the dynamic judging later
-	var sql = 'SELECT * FROM userRelations where uId="' + req.user.id + '" AND cId="' + req.params.cId + '" LIMIT 1';
+	var sql = 'SELECT * FROM userRelations WHERE uId="' + req.user.id + '" AND cId="' + req.params.cId + '" LIMIT 1';
 	connection.query(sql, function (err, rows, fields) {
 		if (rows.length == 0 || rows[0].relationship != 'judge') {
 			res.redirect("/judge");
 		} else {
-			res.render('judge/contest', { 
-				user: req.user,
-				foo: "Thi sis foo"
-			});
+			//2: get contest data
+			var sql = 'SELECT * FROM contests WHERE id="' + req.params.cId + '" LIMIT 1';
+			connection.query(sql, function (err, rows, fields) {
+				var contest = rows[0];
+				//3: get the entries
+				var sql = 'SELECT * FROM entries WHERE cId="' + req.params.cId + '"';
+				connection.query(sql, function (err, rows, fields) {
+					var entries = rows;
+					// do the dynamic judging later
+					res.render('judge/contest', { 
+						user: req.user,
+						contest: contest,
+						entries: entries
+					});
+				});
+			});			
 		}
 	});	
 });

@@ -66,8 +66,26 @@ body#signUp {
 body#main {
 	div#judgingWrapper {
 		text-align: center;
-		h1 {
-
+		h1 { }
+		div#carousel {
+			overflow-x: scroll;
+			div.imageFrame{
+				padding: 30px;
+			//	-webkit-transform: rotate(90deg); /* Safari and Chrome */
+			//	-moz-transform: rotate(90deg);   /* Firefox */
+			//	-ms-transform: rotate(90deg);   /* IE 9 */
+			//	-o-transform: rotate(90deg);   /* Opera */
+			//	transform: rotate(90deg);
+			//	-webkit-background-clip:padding-box; /* IOS fix */
+			//	background-clip:padding-box; /* IOS fix */
+				height: auto;
+				float: left;
+				img {
+					height: 600px;
+					width: 400px;
+					float: left;
+				}
+			}
 		}
 	}
 	div.bottomButton {
