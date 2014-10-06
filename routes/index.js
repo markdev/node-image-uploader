@@ -514,6 +514,16 @@ router.get('/judge/contest/:cId?', function(req, res, next) {
 	});	
 });
 
+router.post('/judge/ajax', function(req, res, next) {
+	console.log(req.body.activeId);
+	console.log(req.body.cId);
+	var sql = 'SELECT * FROM judges WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.activeId + '"'; 
+	connection.query(sql, function (err, rows, fields) {
+		console.log(rows);
+		res.send(rows);
+	});	
+});
+
 router.get('/judge/report', function(req, res, next) {
 	res.render('judge/report', { user: req.user });
 });

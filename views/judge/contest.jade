@@ -7,6 +7,7 @@ block content
 	div#judgingWrapper
 		h1 #{contest.title}
 		p#position stuff
+		input(type='hidden' id='cId' value='#{contest.id}')
 		div#carousel
 			table
 				tr		
@@ -14,6 +15,16 @@ block content
 						td(id="#{entry.id}")
 							div.imageFrame
 								img(src="/entries/#{entry.picture}")
+		table#buttons
+			tr
+				- for (var i=1; i<=10; i++) {
+				td
+					a(id="link#{i}" class="score")
+						div(class="button" id="button#{i}") #{i}
+				- }
+
+		- var foo = "this is the foo";
+		p #{foo}
 		script(type='text/javascript').
 			$('document').ready(function() {
 				judge();

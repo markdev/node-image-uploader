@@ -81,10 +81,35 @@ body#main {
 				height: auto;
 				float: left;
 				img {
-					height: 600px;
-					width: 400px;
+					height: 400px;
+					width: 300px;
 					float: left;
 				}
+			}
+		}
+		table#buttons {
+			margin: 0 auto;
+			div.button {
+				display: table-cell;
+				border-radius: 10px;
+				width: 80px;
+				height: 65px;
+				margin: 10px;
+				text-align: center;
+				vertical-align: middle;
+				&#button1 { background-color: #FFE874; }
+				&#button2 { background-color: #FFD864; }
+				&#button3 { background-color: #FFC854; }
+				&#button4 { 
+					background-color: #FFB844; 
+					border: 10px solid black;
+				}
+				&#button5 { background-color: #FFA834; }
+				&#button6 { background-color: #FF9824; }
+				&#button7 { background-color: #FF8814; }
+				&#button8 { background-color: #FF7804; }
+				&#button9 { background-color: #FF6800; }
+				&#button10 { background-color: #FF5800; }
 			}
 		}
 	}
