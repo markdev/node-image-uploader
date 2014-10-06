@@ -10,11 +10,11 @@ block content
 		input(type='hidden' id='cId' value='#{contest.id}')
 		div#carousel
 			table
-				tr		
-					each entry, i in entries
-						td(id="#{entry.id}")
-							div.imageFrame
-								img(src="/entries/#{entry.picture}")
+				tr
+				each entry, i in entries
+					td(id="#{entry.id}")
+						div.imageFrame
+							img(src="/entries/#{entry.picture}")
 		table#buttons
 			tr
 				- for (var i=1; i<=10; i++) {
