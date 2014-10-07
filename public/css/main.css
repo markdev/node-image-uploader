@@ -96,11 +96,10 @@ body#main div#judgingWrapper {
           background-image: url("/assets/star9.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button10 {
           background-image: url("/assets/star10.png"); }
-        body#main div#judgingWrapper table#buttons a.score div.button:hover {
-          background-image: url("/assets/staractive.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button.active {
           font-weight: bold;
-          font-size: 2em; }
+          font-size: 2em;
+          background-color: #f00; }
 body#main div.bottomButton {
   width: 14%;
   height: 80%;

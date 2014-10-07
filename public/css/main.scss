@@ -108,10 +108,11 @@ body#main {
 					&#button8 { background-image: url("/assets/star8.png"); }
 					&#button9 { background-image: url("/assets/star9.png"); }
 					&#button10 { background-image: url("/assets/star10.png"); }
-					&:hover { background-image: url("/assets/staractive.png"); }
+					//&:hover { background-image: url("/assets/staractive.png"); }
 					&.active {
 						font-weight: bold;
-						font-size: 2em;			
+						font-size: 2em;	
+						background-color: #f00;		
 					}
 				}
 			}

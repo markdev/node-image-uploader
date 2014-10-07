@@ -55,7 +55,10 @@ var judge = function() {
 	var findCenterImage = function() {
 		var isCentered = function(pos) { return (pos > 250)? true : false; };
 		var engageEntry = function(element) { 
-			element.children("div.imageFrame").css('background-color', '#F00'); 
+			element.children("div.imageFrame").css('background-color', '#F00');
+			//clear all ratings, then add the new one
+			$('div.button').removeClass('active');
+			$('div#button' + entries[activeId].rating).addClass('active');
 		};
 		var found = false;
 
@@ -90,7 +93,25 @@ var judge = function() {
 		findCenterImage();
 	});
 
-	$('div.button').click(function() {});
+	$('div.button').click(function() {
+		var rating = $(this).attr('id').substr(6);
+		//console.log(rating);
+		// update rating locally, then ajax it.
+		entries[activeId].rating = rating;
+		console.log(entries);
+		$.ajax({
+			url: '/judge/contest/submitRating',
+			method: 'post',
+			data: {
+				rating: rating,
+				cId: $('#cId').val(),
+				eId: entries[activeId].eId
+			}
+		}).done(function(rating) {
+			$('div.button').removeClass('active');
+			$('div#button' + rating).addClass('active');
+		});
+	});
 
 	//actions to execute on page load
 	addEntryToCarousel();

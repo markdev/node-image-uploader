@@ -530,8 +530,24 @@ router.post('/judge/contest/getNewEntry', function(req, res, next) {
 });
 
 router.post('/judge/contest/submitRating', function(req, res, next) {
-	// make a sql query from the data
-	// return true or false
+	var sql = 'SELECT * FROM judges WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.eId + '"';
+	connection.query(sql, function (err, rows, fields) {
+		if (rows.length > 0) {
+			// entry exists; update it
+			var sql = 'UPDATE judges SET rating="' + req.body.rating + '", judgedOn=NOW() WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.eId + '"';
+			connection.query(sql, function (err, rows, fields) {
+				console.log(rows);
+				res.send(req.body.rating);
+			});
+		} else {
+			// no entry; create it
+			var sql = 'INSERT INTO judges (uId, cId, eId, rating, judgedOn) VALUES ("' + req.user.id + '", "' + req.body.cId + '", "' + req.body.eId + '", "' + req.body.rating + '", NOW())';
+			connection.query(sql, function (err, rows, fields) {
+				console.log(rows);
+				res.send(req.body.rating);
+			});
+		}
+	});
 });
 
 
