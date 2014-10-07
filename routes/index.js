@@ -479,18 +479,22 @@ router.get('/messages/message', function(req, res, next) {
 *	Judge
 */
 router.get('/judge', function(req, res, next) {
-	var sql = 'SELECT c.id, c.title, c.banner, c.rules, c.deadline, c.judging, c.competition, u.relationship FROM contests as c JOIN userRelations as u ON c.id = u.cId WHERE u.uId=' + req.user.id + ' AND u.relationship="judge"';
-	console.log(sql);
+	var sql = 'SELECT c.id, c.title, c.banner, c.rules, c.deadline, c.judging, c.competition, u.relationship, (SELECT COUNT(*) FROM entries WHERE cId = c.id) AS entries, (SELECT COUNT(*) FROM userRelations WHERE relationship="judge" AND cId = c.id) AS judges FROM contests as c JOIN userRelations as u ON c.id = u.cId WHERE u.uId=' + req.user.id + ' AND u.relationship="judge"';
 	connection.query(sql, function (err, rows, fields) {
-		console.log(err);
+		console.log(rows);
 		res.render('judge/index', {
 			user: req.user,
-			contests: rows,
-			entries: 3,
-			judges: 150
+			contests: rows
 		});
 	});
 });
+
+
+
+
+
+
+
 
 router.get('/judge/contest/:cId?', function(req, res, next) {
 	//1: validate.  If you ain't a judge, you get bounced.
@@ -565,7 +569,9 @@ router.get('/judge/report', function(req, res, next) {
 *	Compete
 */
 router.get('/compete', function(req, res, next) {
-	var sql = 'SELECT * FROM contests JOIN userRelations ON contests.id = userRelations.cId WHERE userRelations.uId=' + req.user.id + ' AND userRelations.relationship="competitor"';
+	//var sql = 'SELECT * FROM contests JOIN userRelations ON contests.id = userRelations.cId WHERE userRelations.uId=' + req.user.id + ' AND userRelations.relationship="competitor"';
+	var sql = 'SELECT c.id, c.title, c.banner, c.rules, c.deadline, c.judging, c.competition, u.relationship, (SELECT COUNT(*) FROM entries WHERE cId = c.id) AS entries, (SELECT COUNT(*) FROM userRelations WHERE relationship="judge" AND cId = c.id) AS judges FROM contests as c JOIN userRelations as u ON c.id = u.cId WHERE u.uId=' + req.user.id + ' AND u.relationship="competitor"';
+	
 	connection.query(sql, function (err, rows, fields) {
 		res.render('compete/index', {
 			user: req.user,
