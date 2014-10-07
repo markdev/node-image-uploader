@@ -82,9 +82,10 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
-	res.redirect('/');
+	//res.redirect('/');
 	//for dev purposes:
-	//res.redirect('/judge/contest/1');
+	//
+	res.redirect('/judge/contest/1');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -497,6 +498,41 @@ router.get('/judge/contest/:cId?', function(req, res, next) {
 			//2: get contest data
 			var sql = 'SELECT * FROM contests WHERE id="' + req.params.cId + '" LIMIT 1';
 			connection.query(sql, function (err, rows, fields) {
+			var contest = rows[0];
+				res.render('judge/contest', { 
+					user: req.user,
+					contest: contest,
+					entries: []
+				});
+			});			
+		}
+	});	
+});
+
+router.post('/judge/contest/getNewEntry', function(req, res, next) {
+	// unpack data, which contains the currently displayed entries
+	// return data for a new entry
+});
+
+router.post('/judge/contest/submitRating', function(req, res, next) {
+	// make a sql query from the data
+	// return true or false
+});
+
+
+
+
+/*
+router.get('/judge/contest/:cId?', function(req, res, next) {
+	//1: validate.  If you ain't a judge, you get bounced.
+	var sql = 'SELECT * FROM userRelations WHERE uId="' + req.user.id + '" AND cId="' + req.params.cId + '" LIMIT 1';
+	connection.query(sql, function (err, rows, fields) {
+		if (rows.length == 0 || rows[0].relationship != 'judge') {
+			res.redirect("/judge");
+		} else {
+			//2: get contest data
+			var sql = 'SELECT * FROM contests WHERE id="' + req.params.cId + '" LIMIT 1';
+			connection.query(sql, function (err, rows, fields) {
 				var contest = rows[0];
 				//3: get the entries
 				var sql = 'SELECT * FROM entries WHERE cId="' + req.params.cId + '"';
@@ -545,7 +581,7 @@ router.post('/judge/rateEntry', function(req, res, next) {
 router.get('/judge/report', function(req, res, next) {
 	res.render('judge/report', { user: req.user });
 });
-
+*/
 
 
 

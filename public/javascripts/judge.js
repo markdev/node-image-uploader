@@ -1,18 +1,51 @@
 var judge = function() {
+	//This corrects that stupid browser rotation thing in Chrome
 	var nVer = navigator.appVersion;
 	var nAgt = navigator.userAgent;
 	var browserName  = navigator.appName;
 	var fullVersion  = ''+parseFloat(navigator.appVersion); 
 	var majorVersion = parseInt(navigator.appVersion,10);
 	var nameOffset,verOffset,ix;
-	var activeId = 1;
-
-	// In Chrome, the true version is after "Chrome" 
 	if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
 		browserName = "Chrome";
 		fullVersion = nAgt.substring(verOffset+7);
 		$("div#carousel div.imageFrame").css('-webkit-transform', 'rotate(90deg)');
 	}
+
+	//variables
+	// entries will be an array of JSON objects that looks roughly like this:
+	// {
+	//		eId: int,
+	//		url: string,
+	//		rating: int
+	// }
+	var entries = [];
+
+	//internal functions
+	var findCenterImage = function() {};
+
+	var changeCenterImageData = function() {};
+
+	var addEntryToCarousel = function() {
+		console.log("I've been called");
+	};
+
+	var updateRatingOnButtons = function() {};
+
+	var slideLeft = function() {};
+
+
+	//event handlers
+	$('div#carousel').scroll(function() {});
+
+	$('div.button').click(function() {});
+
+	//actions to execute on page load
+	addEntryToCarousel();
+
+
+/*
+	var activeId = 1;
 
 	$('div#carousel').scroll(function() {
 		var active = false;
@@ -69,4 +102,5 @@ var judge = function() {
 			$('div#button' + rating).addClass('active');
 		});
 	});
+*/
 };
