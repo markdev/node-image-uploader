@@ -21,13 +21,28 @@ var judge = function() {
 	// }
 	var entries = [];
 
+	// this specifies the index of the entries for the active entry
+	// this will be an int, and will reference the html element ids
+	var activeId = false;
+
+
 	//internal functions
 	var findCenterImage = function() {};
 
 	var changeCenterImageData = function() {};
 
 	var addEntryToCarousel = function() {
-		console.log("I've been called");
+	console.log("you're not crazy");
+		$.ajax({
+			url: '/judge/contest/getNewEntry',
+			method: 'post',
+			data: {
+				cId: $('#cId').val(),
+				entries: entries
+			}
+		}).done(function(data) {
+			console.log(data);
+		});
 	};
 
 	var updateRatingOnButtons = function() {};

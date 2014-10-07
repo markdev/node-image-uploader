@@ -510,6 +510,7 @@ router.get('/judge/contest/:cId?', function(req, res, next) {
 });
 
 router.post('/judge/contest/getNewEntry', function(req, res, next) {
+	res.send('yo dude');
 	// unpack data, which contains the currently displayed entries
 	// return data for a new entry
 });
