@@ -85,7 +85,7 @@ router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
 	//
-	res.redirect('/judge/contest/1');
+	res.redirect('/judge');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -479,11 +479,15 @@ router.get('/messages/message', function(req, res, next) {
 *	Judge
 */
 router.get('/judge', function(req, res, next) {
-	var sql = 'SELECT * FROM contests JOIN userRelations ON contests.id = userRelations.cId WHERE userRelations.uId=' + req.user.id + ' AND userRelations.relationship="judge"';
+	var sql = 'SELECT c.id, c.title, c.banner, c.rules, c.deadline, c.judging, c.competition, u.relationship FROM contests as c JOIN userRelations as u ON c.id = u.cId WHERE u.uId=' + req.user.id + ' AND u.relationship="judge"';
+	console.log(sql);
 	connection.query(sql, function (err, rows, fields) {
+		console.log(err);
 		res.render('judge/index', {
 			user: req.user,
-			contests: rows
+			contests: rows,
+			entries: 3,
+			judges: 150
 		});
 	});
 });
