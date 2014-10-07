@@ -51,15 +51,18 @@ body#signUp {
 body#main div#judgingWrapper {
   text-align: center; }
   body#main div#judgingWrapper div#carousel {
+    text-align: center;
     overflow-x: scroll; }
-    body#main div#judgingWrapper div#carousel div.imageFrame {
-      padding: 30px;
-      height: auto;
-      float: left; }
-      body#main div#judgingWrapper div#carousel div.imageFrame img {
-        height: 400px;
-        width: 300px;
+    body#main div#judgingWrapper div#carousel table {
+      margin: 0 auto; }
+      body#main div#judgingWrapper div#carousel table div.imageFrame {
+        padding: 30px;
+        height: auto;
         float: left; }
+        body#main div#judgingWrapper div#carousel table div.imageFrame img {
+          height: 400px;
+          width: 300px;
+          float: left; }
   body#main div#judgingWrapper table#buttons {
     margin: 0 auto; }
     body#main div#judgingWrapper table#buttons a.score {
@@ -68,31 +71,33 @@ body#main div#judgingWrapper {
       body#main div#judgingWrapper table#buttons a.score div.button {
         display: table-cell;
         border-radius: 10px;
-        width: 80px;
-        height: 65px;
+        width: 70px;
+        height: 70px;
         margin: 10px;
         text-align: center;
         vertical-align: middle; }
         body#main div#judgingWrapper table#buttons a.score div.button#button1 {
-          background-color: #FFE874; }
+          background-image: url("/assets/star1.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button2 {
-          background-color: #FFD864; }
+          background-image: url("/assets/star2.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button3 {
-          background-color: #FFC854; }
+          background-image: url("/assets/star3.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button4 {
-          background-color: #FFB844; }
+          background-image: url("/assets/star4.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button5 {
-          background-color: #FFA834; }
+          background-image: url("/assets/star5.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button6 {
-          background-color: #FF9824; }
+          background-image: url("/assets/star6.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button7 {
-          background-color: #FF8814; }
+          background-image: url("/assets/star7.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button8 {
-          background-color: #FF7804; }
+          background-image: url("/assets/star8.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button9 {
-          background-color: #FF6800; }
+          background-image: url("/assets/star9.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button#button10 {
-          background-color: #FF5800; }
+          background-image: url("/assets/star10.png"); }
+        body#main div#judgingWrapper table#buttons a.score div.button:hover {
+          background-image: url("/assets/staractive.png"); }
         body#main div#judgingWrapper table#buttons a.score div.button.active {
           font-weight: bold;
           font-size: 2em; }

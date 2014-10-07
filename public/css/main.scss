@@ -68,22 +68,19 @@ body#main {
 		text-align: center;
 		h1 { }
 		div#carousel {
+			text-align: center;
 			overflow-x: scroll;
-			div.imageFrame{
-				padding: 30px;
-			//	-webkit-transform: rotate(90deg); /* Safari and Chrome */
-			//	-moz-transform: rotate(90deg);   /* Firefox */
-			//	-ms-transform: rotate(90deg);   /* IE 9 */
-			//	-o-transform: rotate(90deg);   /* Opera */
-			//	transform: rotate(90deg);
-			//	-webkit-background-clip:padding-box; /* IOS fix */
-			//	background-clip:padding-box; /* IOS fix */
-				height: auto;
-				float: left;
-				img {
-					height: 400px;
-					width: 300px;
+			table {
+				margin: 0 auto;
+				div.imageFrame{
+					padding: 30px;
+					height: auto;
 					float: left;
+					img {
+						height: 400px;
+						width: 300px;
+						float: left;
+					}
 				}
 			}
 		}
@@ -95,21 +92,23 @@ body#main {
 				div.button {
 					display: table-cell;
 					border-radius: 10px;
-					width: 80px;
-					height: 65px;
+					width: 70px;
+					height: 70px;
 					margin: 10px;
 					text-align: center;
 					vertical-align: middle;
-					&#button1 { background-color: #FFE874; }
-					&#button2 { background-color: #FFD864; }
-					&#button3 { background-color: #FFC854; }
-					&#button4 { background-color: #FFB844; }
-					&#button5 { background-color: #FFA834; }
-					&#button6 { background-color: #FF9824; }
-					&#button7 { background-color: #FF8814; }
-					&#button8 { background-color: #FF7804; }
-					&#button9 { background-color: #FF6800; }
-					&#button10 { background-color: #FF5800; }
+					//background-image: url("/assets/starproto.png");
+					&#button1 { background-image: url("/assets/star1.png"); }
+					&#button2 { background-image: url("/assets/star2.png"); }
+					&#button3 { background-image: url("/assets/star3.png"); }
+					&#button4 { background-image: url("/assets/star4.png"); }
+					&#button5 { background-image: url("/assets/star5.png"); }
+					&#button6 { background-image: url("/assets/star6.png"); }
+					&#button7 { background-image: url("/assets/star7.png"); }
+					&#button8 { background-image: url("/assets/star8.png"); }
+					&#button9 { background-image: url("/assets/star9.png"); }
+					&#button10 { background-image: url("/assets/star10.png"); }
+					&:hover { background-image: url("/assets/staractive.png"); }
 					&.active {
 						font-weight: bold;
 						font-size: 2em;			

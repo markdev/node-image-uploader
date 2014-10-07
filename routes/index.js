@@ -510,7 +510,11 @@ router.get('/judge/contest/:cId?', function(req, res, next) {
 });
 
 router.post('/judge/contest/getNewEntry', function(req, res, next) {
-	res.send('yo dude');
+	// real basic sql, don't unpack entries variable yet
+	var sql = 'SELECT * FROM entries WHERE entries.cId="' + req.body.cId + '" AND entries.id NOT IN (SELECT eId FROM judges WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '") ORDER BY RAND() LIMIT 1';
+	connection.query(sql, function (err, rows, fields) {
+		res.send(rows);
+	});
 	// unpack data, which contains the currently displayed entries
 	// return data for a new entry
 });
