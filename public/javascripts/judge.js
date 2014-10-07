@@ -29,13 +29,15 @@ var judge = function() {
 
 	//internal functions
 	var addEntryToCarousel = function() {
-		$.ajax({
-			url: '/judge/contest/getNewEntry',
-			method: 'post',
-			data: {
+		var data = {
 				cId: $('#cId').val(),
 				entries: entries
-			}
+			};
+		$.ajax({
+			"url": '/judge/contest/getNewEntry',
+			"method": 'post',
+			"data": {jsonData : JSON.stringify(data)},
+			"datatype": 'json'
 		}).done(function(rows) {
 			// Add the entry to the carousel
 			$('div#carousel table tr').append('<td id="' + entries.length + '"><div class="imageFrame"><img src="/entries/' + rows[0].picture + '" /></div></td>');
@@ -62,18 +64,17 @@ var judge = function() {
 			var lPos = $(this).position().left;
 			if (isCentered(lPos) && !found) {
 				found = true;
-				if ($(this).attr('id') != activeId || activeId < 4) {
+				if ($(this).attr('id') != activeId || activeId < 2) {
 					activeId = $(this).attr('id');
 					engageEntry($(this));
 					if (4 > entries.length - activeId) {
-						console.log(entries.length);
+						console.log(activeId + " out of " + entries.length);
 						addEntryToCarousel();
 					}
 				}
 			} else {
 				$(this).children("div.imageFrame").css('background-color', '#000');
 			}
-			// now look at entries and see how many come after activeId
 		});
 	};
 

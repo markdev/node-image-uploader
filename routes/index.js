@@ -510,13 +510,23 @@ router.get('/judge/contest/:cId?', function(req, res, next) {
 });
 
 router.post('/judge/contest/getNewEntry', function(req, res, next) {
-	// real basic sql, don't unpack entries variable yet
-	var sql = 'SELECT * FROM entries WHERE entries.cId="' + req.body.cId + '" AND entries.id NOT IN (SELECT eId FROM judges WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '") ORDER BY RAND() LIMIT 1';
+	var data = JSON.parse(req.body.jsonData);
+	var queryPhrase = '';
+	if (data.entries.length > 0) {
+		queryPhrase = ' AND entries.id NOT IN (';
+		var existingEntries = [];
+		for (var i = 0; i<data.entries.length; i++) {
+			existingEntries[existingEntries.length] = data.entries[i].eId
+		}
+		queryPhrase += existingEntries.join(', ');
+		queryPhrase += ') ';
+	}
+	var sql = 'SELECT * FROM entries WHERE entries.cId="' + data.cId + '" AND entries.id NOT IN (SELECT eId FROM judges WHERE uId="' + req.user.id + '" AND cId="' + data.cId + '") ' + queryPhrase + ' ORDER BY RAND() LIMIT 1';
+	console.log(sql);
 	connection.query(sql, function (err, rows, fields) {
+		//console.log(req.body);
 		res.send(rows);
 	});
-	// unpack data, which contains the currently displayed entries
-	// return data for a new entry
 });
 
 router.post('/judge/contest/submitRating', function(req, res, next) {
