@@ -12,6 +12,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressSession = require('express-session');
 var validator = require('validator');
+var exec = require('child_process').exec;
 
 var connection = mysql.createConnection({
 	host     : 'localhost',
@@ -609,10 +610,15 @@ router.post('/compete/submit', function(req, res, next) {
 		// create the database entry
 		console.log(req.files.chooseFile);
 		var sql = 'INSERT INTO entries (uId, cId, picture, uploadTime) VALUES ("' + req.user.id + '", "' + req.body.cId + '", "' + req.files.chooseFile.name + '", NOW())';
-		connection.query(sql, function(err, rows, fields) { // now move the file		
+		connection.query(sql, function(err, rows, fields) { 
+			// now move the file		
 			fs.rename('uploads/' + req.files.chooseFile.name, 'public/entries/' + req.files.chooseFile.name, function(err) {
 				console.log(req.files.chooseFile.name + " has been renamed!");
-				res.redirect('/compete');
+				// resize the file
+				exec('convert public/entries/' + req.files.chooseFile.name + ' -resize 400x600 public/entries/' + req.files.chooseFile.name, function(err, stdout, stderr) {
+					console.log(req.files.chooseFile.name + " has been resized!");
+					res.redirect('/compete');
+				});
 			});
 		});
 	}
