@@ -550,69 +550,10 @@ router.post('/judge/contest/submitRating', function(req, res, next) {
 	});
 });
 
-
-
-
-/*
-router.get('/judge/contest/:cId?', function(req, res, next) {
-	//1: validate.  If you ain't a judge, you get bounced.
-	var sql = 'SELECT * FROM userRelations WHERE uId="' + req.user.id + '" AND cId="' + req.params.cId + '" LIMIT 1';
-	connection.query(sql, function (err, rows, fields) {
-		if (rows.length == 0 || rows[0].relationship != 'judge') {
-			res.redirect("/judge");
-		} else {
-			//2: get contest data
-			var sql = 'SELECT * FROM contests WHERE id="' + req.params.cId + '" LIMIT 1';
-			connection.query(sql, function (err, rows, fields) {
-				var contest = rows[0];
-				//3: get the entries
-				var sql = 'SELECT * FROM entries WHERE cId="' + req.params.cId + '"';
-				connection.query(sql, function (err, rows, fields) {
-					var entries = rows;
-					// do the dynamic judging later
-					res.render('judge/contest', { 
-						user: req.user,
-						contest: contest,
-						entries: entries
-					});
-				});
-			});			
-		}
-	});	
-});
-
-router.post('/judge/ajax', function(req, res, next) {
-	var sql = 'SELECT * FROM judges WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.activeId + '"'; 
-	connection.query(sql, function (err, rows, fields) {
-		console.log(rows);
-		res.send(rows);
-	});	
-});
-
-router.post('/judge/rateEntry', function(req, res, next) {
-	//console.log(req.body);
-	var sql = 'SELECT * FROM judges WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.eId + '"';
-	connection.query(sql, function (err, rows, fields) {
-		if (rows.length > 0) {
-			// entry exists; update it
-			var sql = 'UPDATE judges SET rating="' + req.body.rating + '", judgedOn=NOW() WHERE uId="' + req.user.id + '" AND cId="' + req.body.cId + '" AND eId="' + req.body.eId + '"';
-			connection.query(sql, function (err, rows, fields) {
-				res.send(req.body.rating);
-			});
-		} else {
-			// no entry; create it
-			var sql = 'INSERT INTO judges (uId, cId, eId, rating, judgedOn) VALUES ("' + req.user.id + '", "' + req.body.cId + '", "' + req.body.eId + '", "' + req.body.rating + '", NOW())';
-			connection.query(sql, function (err, rows, fields) {
-				res.send(req.body.rating);
-			});
-		}
-	});
-});
-
 router.get('/judge/report', function(req, res, next) {
 	res.render('judge/report', { user: req.user });
 });
-*/
+
 
 
 
