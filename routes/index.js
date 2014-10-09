@@ -85,7 +85,7 @@ router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	//res.redirect('/');
 	//for dev purposes:
 	//
-	res.redirect('/judge');
+	res.redirect('/compete/playByPlay/1');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -584,10 +584,21 @@ router.get('/compete/results', function(req, res, next) {
 	res.render('compete/results', { user: req.user });
 });
 
-router.get('/compete/playByPlay/:cId?', function(req, res, next) {
-	res.render('compete/playByPlay', { 
-		user: req.user 
-	});
+router.get('/compete/playByPlay/:eId?', function(req, res, next) {
+	var sql = 'SELECT * FROM contests WHERE id = (SELECT cId FROM entries WHERE id = "' + req.params.eId + '")';
+	connection.query(sql, function (err, rows, fields) {
+		var contest = rows[0];
+		var sql = 'SELECT * FROM entries WHERE cId ="' + contest.id + '"';
+		connection.query(sql, function (err, rows, fields) {
+			var entries = rows;
+			console.log(entries);
+			res.render('compete/playByPlay', { 
+				user: req.user,
+				entries: entries,
+				contest: contest 
+			});
+		});
+	});	
 });
 
 router.get('/compete/submit/:cId?', function(req, res, next) {

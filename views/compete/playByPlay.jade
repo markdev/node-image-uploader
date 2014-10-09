@@ -4,12 +4,13 @@ block title
 	title Play By Play
 
 block content
-	h1 Play By Play 
-	ul
-		li
-			a(href="/compete") Contests I'm Competing In
-		li
-			a(href="/compete/results") My Results
-		li
-			a(href="/compete/submit") Submit Entry
+	div.mainBody
+		h1 Play By Play for #{contest.title}
+		table#contests
+			each entry, i in entries
+				tr(class=(i % 2 == 0) ? 'odd' : 'even')
+					td.thumbnail
+						img.thumbnail(src="/entries/#{entry.picture}")
+					td.title
+						p Insert title here
 	
