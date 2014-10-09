@@ -5,12 +5,21 @@ block title
 
 block content
 	div.mainBody
-		h1 Play By Play for #{contest.title}
+		h1 Current Scores for #{contest.title}
 		table#contests
+			tr
+				td.thumbnail
+				td.title Title
+				td.score Score
+				td.judges # of judges
 			each entry, i in entries
 				tr(class=(i % 2 == 0) ? 'odd' : 'even')
 					td.thumbnail
 						img.thumbnail(src="/entries/#{entry.picture}")
 					td.title
 						p Insert title here
+					td.score
+						p #{entry.score}
+					td.judges
+						p #{entry.judges}
 	

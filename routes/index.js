@@ -588,7 +588,7 @@ router.get('/compete/playByPlay/:eId?', function(req, res, next) {
 	var sql = 'SELECT * FROM contests WHERE id = (SELECT cId FROM entries WHERE id = "' + req.params.eId + '")';
 	connection.query(sql, function (err, rows, fields) {
 		var contest = rows[0];
-		var sql = 'SELECT * FROM entries WHERE cId ="' + contest.id + '"';
+		var sql = 'SELECT e.id, e.uId, e.cId, e.picture, (SELECT AVG(rating) as score FROM judges WHERE eId = e.id) AS score, (SELECT count(*) FROM judges WHERE eId = e.id) AS judges FROM entries as e WHERE cId ="' + contest.id + '" ORDER BY score desc';
 		connection.query(sql, function (err, rows, fields) {
 			var entries = rows;
 			console.log(entries);

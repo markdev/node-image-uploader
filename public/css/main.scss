@@ -270,6 +270,10 @@ body#main {
 				td.deadline {
 					width: 200px;
 				}
+				td.score, td.judges {
+					width: 75px;
+					text-align: center;
+				}
 			}
 			table.editContest {
 				margin: auto;

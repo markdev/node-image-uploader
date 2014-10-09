@@ -229,6 +229,9 @@ body#main div#body div.mainBody {
       width: 100px; }
     body#main div#body div.mainBody table#contests td.deadline {
       width: 200px; }
+    body#main div#body div.mainBody table#contests td.score, body#main div#body div.mainBody table#contests td.judges {
+      width: 75px;
+      text-align: center; }
   body#main div#body div.mainBody table.editContest {
     margin: auto; }
     body#main div#body div.mainBody table.editContest td img {
